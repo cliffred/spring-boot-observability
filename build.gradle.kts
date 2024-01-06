@@ -22,12 +22,17 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-	implementation("io.micrometer:micrometer-tracing-bridge-brave")
+	implementation("io.micrometer:micrometer-tracing-bridge-otel")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
+
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
-	developmentOnly("org.springframework.boot:spring-boot-docker-compose")
-	runtimeOnly("io.micrometer:micrometer-registry-influx")
+//	developmentOnly("org.springframework.boot:spring-boot-docker-compose")
+
 	runtimeOnly("io.micrometer:micrometer-registry-prometheus")
+
+	runtimeOnly("ch.qos.logback.contrib:logback-jackson:0.1.5")
+	runtimeOnly("ch.qos.logback.contrib:logback-json-classic:0.1.5")
+
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 

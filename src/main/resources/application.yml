@@ -1,0 +1,7 @@
+management:
+  tracing:
+    baggage:
+      correlation:
+        fields:
+          - custom_tx_id
+      enabled: true
