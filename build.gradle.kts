@@ -24,13 +24,14 @@ dependencies {
 	val kotest = "5.8.0"
 	val kotestSpring = "1.1.3"
 	val springMockk = "4.0.2"
+	val kotlinLogging = "5.1.0"
 
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("io.micrometer:micrometer-tracing-bridge-otel")
 	implementation("io.opentelemetry:opentelemetry-exporter-otlp")
-
+	implementation("io.github.oshai:kotlin-logging-jvm:$kotlinLogging")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")

@@ -1,5 +1,6 @@
 package red.cliff.observability
 
+import io.github.oshai.kotlinlogging.KotlinLogging
 import io.micrometer.tracing.Tracer
 import org.slf4j.LoggerFactory
 import org.springframework.web.bind.annotation.GetMapping
@@ -13,7 +14,7 @@ class HelloController(
     rcb: RestClient.Builder,
 ) {
 
-    private val logger = LoggerFactory.getLogger(HelloController::class.java)
+    private val logger = KotlinLogging.logger {}
 
     private val client = rcb
         .baseUrl("http://httpbin.org")
