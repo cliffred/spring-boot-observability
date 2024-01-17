@@ -23,15 +23,19 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("io.micrometer:micrometer-tracing-bridge-otel")
+	implementation("io.opentelemetry:opentelemetry-exporter-otlp")
+
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
+	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
+	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
 
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
-//	developmentOnly("org.springframework.boot:spring-boot-docker-compose")
+	developmentOnly("org.springframework.boot:spring-boot-docker-compose")
 
 	runtimeOnly("io.micrometer:micrometer-registry-prometheus")
-
 	runtimeOnly("ch.qos.logback.contrib:logback-jackson:0.1.5")
 	runtimeOnly("ch.qos.logback.contrib:logback-json-classic:0.1.5")
+	runtimeOnly("com.github.loki4j:loki-logback-appender:1.4.2")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }

@@ -1,7 +1,22 @@
+spring:
+  application.name: Hello App
+  docker:
+    compose:
+      lifecycle-management: start_only
+
 management:
+  otlp:
+    tracing:
+      endpoint: http://localhost:4318/v1/traces
   tracing:
     baggage:
       correlation:
         fields:
           - custom_tx_id
       enabled: true
+    sampling:
+      probability: 1.0
+  endpoints:
+    web:
+      exposure:
+        include: prometheus,health,info
