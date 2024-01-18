@@ -6,6 +6,7 @@ kotlin-logging = "6.0.3"
 kotlinter = "4.2.0"
 logback = "0.1.5"
 loki-appender = "1.4.2"
+sonar = "4.4.1.3373"
 spring-boot = "3.2.1"
 spring-dependency-management = "1.1.4"
 spring-mockk = "4.0.2"
@@ -43,5 +44,6 @@ tracing = ["micrometer-tracing-bridge-otel", "opentelemetry-exporter-otlp"]
 kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
 kotlinter = { id = "org.jmailen.kotlinter", version.ref = "kotlinter" }
+sonar = { id = "org.sonarqube", version.ref = "sonar" }
 spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
 spring-dependency-management = { id = "io.spring.dependency-management", version.ref = "spring-dependency-management" }

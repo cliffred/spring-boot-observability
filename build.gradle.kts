@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.kotlinter)
     alias(libs.plugins.kotlin)
     alias(libs.plugins.kotlin.spring)
+    alias(libs.plugins.sonar)
 }
 
 group = "red.cliff"
@@ -71,4 +72,12 @@ tasks.withType<BootRun> {
             "--add-opens",
             "java.base/java.lang.ref=ALL-UNNAMED",
         )
+}
+
+sonar {
+    properties {
+        property("sonar.projectKey", "cliffred_spring-boot-observability")
+        property("sonar.organization", "cliffred")
+        property("sonar.host.url", "https://sonarcloud.io")
+    }
 }
