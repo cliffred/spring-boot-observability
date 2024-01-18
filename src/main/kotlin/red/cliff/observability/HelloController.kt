@@ -1,5 +1,6 @@
 package red.cliff.observability
 
+import com.fasterxml.jackson.databind.JsonNode
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.micrometer.tracing.TraceContext
 import io.micrometer.tracing.Tracer
@@ -17,21 +18,21 @@ class HelloController(
     private val logger = KotlinLogging.logger {}
 
     private val client = rcb
-        .baseUrl("http://httpbin.org")
+        .baseUrl("https://httpbin.org")
         .build()
 
     @GetMapping("/hello")
     fun hello(): Map<*, *> {
         val response = client.get().uri("get").retrieve()
-        val body: Map<String, Any> = requireNotNull(response.body())
-        val requestHeaders = body["headers"]
+        val body: JsonNode = requireNotNull(response.body())
+        val traceparentHeader = body["headers"]["Traceparent"].asText()
 
         val traceContext = tracer.currentSpan()?.context() ?: TraceContext.NOOP
 
         logger.info { "Returning hello result with traceId ${traceContext.traceId()}" }
 
         return mapOf(
-            "requestHeaders" to requestHeaders,
+            "traceparentHeader" to traceparentHeader,
             "traceId" to traceContext.traceId(),
             "spanId" to traceContext.spanId(),
             "traceBaggage" to tracer.allBaggage
