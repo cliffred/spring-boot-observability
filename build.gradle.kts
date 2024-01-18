@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.springframework.boot.gradle.tasks.run.BootRun
 
 plugins {
 	id("org.springframework.boot") version "3.2.1"
@@ -45,11 +46,12 @@ dependencies {
 	runtimeOnly("com.github.loki4j:loki-logback-appender:$lokiAppender")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testImplementation("org.springframework.boot:spring-boot-starter-webflux")
 	testImplementation("io.kotest:kotest-runner-junit5:$kotest")
 	testImplementation("io.kotest:kotest-assertions-core:$kotest")
 	testImplementation("io.kotest.extensions:kotest-extensions-spring:$kotestSpring")
 	testImplementation("com.ninja-squad:springmockk:$springMockk")
+
+	testRuntimeOnly("org.springframework.boot:spring-boot-starter-webflux")
 }
 
 tasks.withType<KotlinCompile> {
@@ -61,4 +63,12 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+
+	// Open java lang module for reflection
+	jvmArgs = listOf("--add-opens", "java.base/java.lang=ALL-UNNAMED", "--add-opens", "java.base/java.lang.ref=ALL-UNNAMED")
+}
+
+tasks.withType<BootRun> {
+	// Open java lang module for reflection
+	jvmArgs = listOf("--add-opens", "java.base/java.lang=ALL-UNNAMED", "--add-opens", "java.base/java.lang.ref=ALL-UNNAMED")
 }
