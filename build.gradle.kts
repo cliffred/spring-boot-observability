@@ -1,5 +1,4 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.springframework.boot.gradle.tasks.run.BootRun
 
 plugins {
     alias(libs.plugins.spring.boot)
@@ -53,26 +52,6 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
-
-    // Open java lang module for reflection
-    jvmArgs =
-        listOf(
-            "--add-opens",
-            "java.base/java.lang=ALL-UNNAMED",
-            "--add-opens",
-            "java.base/java.lang.ref=ALL-UNNAMED",
-        )
-}
-
-tasks.withType<BootRun> {
-    // Open java lang module for reflection
-    jvmArgs =
-        listOf(
-            "--add-opens",
-            "java.base/java.lang=ALL-UNNAMED",
-            "--add-opens",
-            "java.base/java.lang.ref=ALL-UNNAMED",
-        )
 }
 
 sonar {
