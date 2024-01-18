@@ -23,8 +23,4 @@ class HelloControllerTest(
             .expectBody<JsonNode>()
             .consumeWith { println(it.responseBody?.toPrettyString()) }
     }
-
-    should("fail") {
-        true shouldBe false
-    }
 })
