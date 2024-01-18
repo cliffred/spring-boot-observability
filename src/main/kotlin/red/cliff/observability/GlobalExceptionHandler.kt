@@ -11,9 +11,11 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @ControllerAdvice
 class GlobalExceptionHandler(private val tracer: Tracer) : ResponseEntityExceptionHandler() {
-
     @ExceptionHandler(Exception::class)
-    fun handleUnknownException(ex: Exception, request: WebRequest): ProblemDetail {
+    fun handleUnknownException(
+        ex: Exception,
+        request: WebRequest
+    ): ProblemDetail {
         logger.error("Unhandled error: ${ex.message}", ex)
         return createProblemDetail(ex, HttpStatus.INTERNAL_SERVER_ERROR, ex.localizedMessage, null, null, request)
     }

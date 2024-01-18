@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class SpringBootObservabilityApplication
 
 fun main(args: Array<String>) {
-	runApplication<SpringBootObservabilityApplication>(*args)
+    runApplication<SpringBootObservabilityApplication>(*args)
 }

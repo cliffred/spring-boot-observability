@@ -14,12 +14,12 @@ class HelloController(
     private val tracer: Tracer,
     rcb: RestClient.Builder,
 ) {
-
     private val logger = KotlinLogging.logger {}
 
-    private val client = rcb
-        .baseUrl("https://httpbin.org")
-        .build()
+    private val client =
+        rcb
+            .baseUrl("https://httpbin.org")
+            .build()
 
     @GetMapping("/hello")
     fun hello(): Map<*, *> {
