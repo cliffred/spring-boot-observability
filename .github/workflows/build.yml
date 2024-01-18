@@ -8,6 +8,8 @@ on:
 
 jobs:
   build:
+    permissions:
+      checks: write
     name: Compile and test
     runs-on: ubuntu-latest
     steps:
@@ -20,3 +22,10 @@ jobs:
         uses: gradle/gradle-build-action@v2
       - name: Execute Gradle build
         run: ./gradlew build
+      - name: Publish Test Report
+        uses: mikepenz/action-junit-report@v4
+        if: failure()
+        with:
+          report_paths: '**/build/test-results/test/TEST-*.xml'
+          require_tests: true
+          detailed_summary: true
