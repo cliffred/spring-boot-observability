@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.kotlin)
     alias(libs.plugins.kotlin.spring)
     alias(libs.plugins.sonar)
+    id("jacoco")
 }
 
 group = "red.cliff"
