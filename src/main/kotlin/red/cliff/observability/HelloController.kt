@@ -25,7 +25,7 @@ class HelloController(
     fun hello(): Map<*, *> {
         val response = client.get().uri("get").retrieve()
         val body: JsonNode = requireNotNull(response.body())
-        val traceparentHeader = body["headers"]["Traceparent"].asText()
+        val traceparentHeader = body["headers"]["Traceparent"]?.asText() ?: "-"
 
         val traceContext = tracer.currentSpan()?.context() ?: TraceContext.NOOP
 
