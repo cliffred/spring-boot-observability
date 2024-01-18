@@ -25,7 +25,7 @@ dependencies {
 	val kotest = "5.8.0"
 	val kotestSpring = "1.1.3"
 	val springMockk = "4.0.2"
-	val kotlinLogging = "5.1.0"
+	val kotlinLogging = "6.0.3"
 
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("org.springframework.boot:spring-boot-starter-web")
