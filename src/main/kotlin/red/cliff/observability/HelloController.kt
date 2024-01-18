@@ -1,8 +1,8 @@
 package red.cliff.observability
 
 import io.github.oshai.kotlinlogging.KotlinLogging
+import io.micrometer.tracing.TraceContext
 import io.micrometer.tracing.Tracer
-import org.slf4j.LoggerFactory
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.client.RestClient
@@ -26,14 +26,14 @@ class HelloController(
         val body: Map<String, Any> = requireNotNull(response.body())
         val requestHeaders = body["headers"]
 
-        val span = tracer.currentSpan() ?: tracer.nextSpan()
+        val traceContext = tracer.currentSpan()?.context() ?: TraceContext.NOOP
 
-        logger.info("headers: $requestHeaders")
+        logger.info { "Returning hello result with traceId ${traceContext.traceId()}" }
 
         return mapOf(
             "requestHeaders" to requestHeaders,
-            "traceId" to span.context().traceId(),
-            "spanId" to span.context().spanId(),
+            "traceId" to traceContext.traceId(),
+            "spanId" to traceContext.spanId(),
             "traceBaggage" to tracer.allBaggage
         )
     }
