@@ -1,4 +1,4 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget.*
 
 plugins {
     alias(libs.plugins.spring.boot)
@@ -15,6 +15,14 @@ version = "0.0.1-SNAPSHOT"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_21
+}
+
+kotlin {
+    jvmToolchain(21)
+    compilerOptions {
+        freeCompilerArgs = listOf("-Xjsr305=strict")
+        jvmTarget = JVM_21
+    }
 }
 
 repositories {
@@ -41,13 +49,6 @@ dependencies {
     testImplementation(libs.spring.mockk)
 
     testRuntimeOnly(libs.spring.boot.starter.webflux)
-}
-
-tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        freeCompilerArgs += "-Xjsr305=strict"
-        jvmTarget = "21"
-    }
 }
 
 tasks.withType<Test> {
