@@ -43,6 +43,7 @@ logging = ["logback-jackson", "logback-json-classic", "loki-logback-appender"]
 tracing = ["micrometer-tracing-bridge-otel", "opentelemetry-exporter-otlp"]
 
 [plugins]
+git-properties = { id = "com.gorylenko.gradle-git-properties", version = "2.4.1" }
 kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
 kotlinter = { id = "org.jmailen.kotlinter", version.ref = "kotlinter" }

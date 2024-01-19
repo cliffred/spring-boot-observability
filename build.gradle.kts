@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.kotlin)
     alias(libs.plugins.kotlin.spring)
     alias(libs.plugins.sonar)
+    alias(libs.plugins.git.properties)
     id("jacoco")
 }
 
@@ -67,4 +68,8 @@ tasks.jacocoTestReport {
     reports {
         xml.required = true
     }
+}
+
+springBoot {
+    buildInfo()
 }
