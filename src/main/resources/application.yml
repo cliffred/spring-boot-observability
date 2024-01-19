@@ -3,6 +3,9 @@ spring:
   docker:
     compose:
       lifecycle-management: start_only
+  threads:
+    virtual:
+      enabled: true
 
 management:
   otlp:
