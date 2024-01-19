@@ -10,6 +10,7 @@ sonar = "4.4.1.3373"
 spring-boot = "3.2.1"
 spring-dependency-management = "1.1.4"
 spring-mockk = "4.0.2"
+springdoc = "2.3.0"
 
 [libraries]
 jackson-module-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin" }
@@ -33,6 +34,7 @@ spring-boot-starter-test = { module = "org.springframework.boot:spring-boot-star
 spring-boot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web" }
 spring-boot-starter-webflux = { module = "org.springframework.boot:spring-boot-starter-webflux" }
 spring-mockk = { module = "com.ninja-squad:springmockk", version.ref = "spring-mockk" }
+springdoc = { module = "org.springdoc:springdoc-openapi-starter-webmvc-ui", version.ref = "springdoc" }
 
 [bundles]
 kotest = ["kotest-runner-junit5", "kotest-assertions-core", "kotest-extensions-spring"]

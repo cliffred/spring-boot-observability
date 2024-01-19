@@ -20,7 +20,12 @@ management:
     web:
       exposure:
         include: prometheus,health,info
+
 logging:
   level:
     root: warn
     red.cliff: info
+
+springdoc:
+  swagger-ui:
+    use-root-path: true

@@ -34,10 +34,10 @@ dependencies {
     implementation(libs.spring.boot.starter.actuator)
     implementation(libs.jackson.module.kotlin)
     implementation(libs.bundles.kotlin)
-
     implementation(libs.kotlin.logging)
     implementation(libs.bundles.logging)
     implementation(libs.bundles.tracing)
+    implementation(libs.springdoc)
 
     developmentOnly(libs.spring.boot.devtools)
     developmentOnly(libs.spring.boot.docker.compose)
