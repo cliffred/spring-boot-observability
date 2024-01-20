@@ -1,4 +1,4 @@
-package red.cliff.observability
+package red.cliff.observability.hello
 
 import com.fasterxml.jackson.databind.JsonNode
 import io.github.oshai.kotlinlogging.KotlinLogging

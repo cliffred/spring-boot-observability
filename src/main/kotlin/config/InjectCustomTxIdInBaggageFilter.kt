@@ -1,4 +1,4 @@
-package red.cliff.observability
+package red.cliff.observability.config
 
 import io.micrometer.tracing.Tracer
 import jakarta.servlet.Filter
