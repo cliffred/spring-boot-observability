@@ -1,4 +1,4 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget.*
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21
 
 plugins {
     alias(libs.plugins.spring.boot)
@@ -32,6 +32,7 @@ repositories {
 
 dependencies {
     implementation(libs.spring.boot.starter.web)
+    implementation(libs.spring.boot.starter.data.jdbc)
     implementation(libs.spring.boot.starter.actuator)
     implementation(libs.jackson.module.kotlin)
     implementation(libs.bundles.kotlin)
@@ -44,6 +45,7 @@ dependencies {
     developmentOnly(libs.spring.boot.docker.compose)
 
     runtimeOnly(libs.micrometer.registry.prometheus)
+    runtimeOnly(libs.h2)
 
     testImplementation(libs.spring.boot.starter.test)
     testImplementation(libs.bundles.kotest)

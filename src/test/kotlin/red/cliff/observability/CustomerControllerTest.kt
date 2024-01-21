@@ -9,14 +9,14 @@ import org.springframework.test.web.reactive.server.expectBody
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class HelloControllerTest(
+class CustomerControllerTest(
     private val webTestClient: WebTestClient,
 ) : ShouldSpec(
         {
             should("return hello") {
                 webTestClient
                     .get()
-                    .uri("/hello")
+                    .uri("/trace")
                     .exchange()
                     .expectStatus().isOk
                     .expectBody<JsonNode>()
