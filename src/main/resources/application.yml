@@ -19,6 +19,14 @@ management:
       enabled: true
     sampling:
       probability: 1.0
+  metrics:
+    tags:
+      application: ${spring.application.name}
+    distribution:
+      percentiles-histogram:
+        http:
+          server:
+            requests: 'true'
   endpoints:
     web:
       exposure:
