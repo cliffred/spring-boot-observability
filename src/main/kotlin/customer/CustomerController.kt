@@ -36,6 +36,7 @@ class CustomerController(
 
     @GetMapping("/customers")
     fun getCustomers(): List<Customer> {
+        logger.info { "Getting all customers" }
         return customerRepository.findAll()
     }
 
@@ -43,6 +44,7 @@ class CustomerController(
     fun createCustomer(
         @RequestBody customer: Customer
     ): Customer {
+        logger.info { "Creating customer ${customer.email}" }
         return customerRepository.save(customer)
     }
 }
