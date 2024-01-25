@@ -6,3 +6,14 @@
 Sample project for implementing a complete observability stack using Loki, Tempo, Prometheus and Grafana in Spring boot.
 
 Largely based on https://github.com/blueswen/spring-boot-observability
+
+## Quick start
+
+- Start the application by running  
+  `./gradlew bootRun` or run the application from within your IDE
+- Find the swagger-ui at http://localhost:8080
+- Generate some observability data by running the k6 load test  
+  `k6 run k6/script.js`
+- View observability data in Grafana  
+  goto http://localhost:3000  
+  log in with `admin` / `admin` and open the **Spring Boot Observability** dashboard
