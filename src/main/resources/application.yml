@@ -24,13 +24,22 @@ management:
       application: ${spring.application.name}
     distribution:
       percentiles-histogram:
-        http:
-          server:
-            requests: 'true'
+        all: true
+      percentiles:
+        all: 0.5, 0.95, 0.99, 1.0
   endpoints:
     web:
       exposure:
         include: '*'
+  info:
+    env:
+      enabled: true
+    java:
+      enabled: true
+
+info:
+  application:
+    name: ${spring.application.name}
 
 logging:
   level:
