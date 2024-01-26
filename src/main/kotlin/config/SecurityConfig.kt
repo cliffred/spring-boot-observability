@@ -18,13 +18,21 @@ import javax.sql.DataSource
 @Configuration
 class SecurityConfig {
     @Bean
-    fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
+    fun securityFilterChain(
+        http: HttpSecurity,
+        securityExceptionHandler: SecurityExceptionHandler,
+    ): SecurityFilterChain {
         http {
             authorizeRequests {
                 authorize("/api/**", authenticated)
+                authorize("/actuator/**", hasRole("ADMIN"))
                 authorize(anyRequest, permitAll)
             }
             httpBasic { }
+            exceptionHandling {
+                accessDeniedHandler = securityExceptionHandler
+                authenticationEntryPoint = securityExceptionHandler
+            }
         }
         return http.build()
     }
