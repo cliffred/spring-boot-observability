@@ -1,6 +1,5 @@
-package red.cliff.observability
+package red.cliff.observability.trace
 
-import com.fasterxml.jackson.databind.JsonNode
 import io.kotest.core.spec.style.ShouldSpec
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
@@ -9,18 +8,18 @@ import org.springframework.test.web.reactive.server.expectBody
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class CustomerControllerTest(
+class TraceControllerTest(
     private val webTestClient: WebTestClient,
 ) : ShouldSpec(
         {
-            should("return hello") {
+            should("return OK from info endpoint") {
                 webTestClient
                     .get()
-                    .uri("/trace")
+                    .uri("/trace/info")
                     .exchange()
                     .expectStatus().isOk
-                    .expectBody<JsonNode>()
-                    .consumeWith { println(it.responseBody?.toPrettyString()) }
+                    .expectBody<String>()
+                    .isEqualTo("OK")
             }
         },
     )
