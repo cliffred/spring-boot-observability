@@ -4,14 +4,15 @@ import com.ninjasquad.springmockk.MockkBean
 import io.kotest.core.spec.style.ShouldSpec
 import io.mockk.every
 import io.mockk.verify
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
-import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
+import org.springframework.context.annotation.Import
 import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.reactive.server.expectBodyList
-import withMockUser
+import red.cliff.observability.TestConfig
+import red.cliff.observability.withMockUser
 
-@SpringBootTest
-@AutoConfigureMockMvc
+@WebMvcTest(CustomerController::class)
+@Import(TestConfig::class)
 class CustomerControllerTest(
     @MockkBean private val customerRepository: CustomerRepository,
     private val webTestClient: WebTestClient,
