@@ -58,6 +58,10 @@ dependencies {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+    testLogging {
+        events("PASSED", "SKIPPED", "FAILED")
+    }
+    systemProperty("kotest.tags", "!Manual")
 }
 
 sonar {

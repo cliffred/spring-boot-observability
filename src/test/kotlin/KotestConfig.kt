@@ -6,3 +6,5 @@ class KotestConfig : AbstractProjectConfig() {
 
     override val globalAssertSoftly = true
 }
+
+object Manual : Tag()
