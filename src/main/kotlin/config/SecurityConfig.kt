@@ -7,15 +7,12 @@ import org.springframework.boot.actuate.metrics.export.prometheus.PrometheusScra
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.annotation.Order
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
 import org.springframework.security.config.annotation.web.HttpSecurityDsl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.invoke
 import org.springframework.security.core.userdetails.User
-import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl
 import org.springframework.security.provisioning.JdbcUserDetailsManager
 import org.springframework.security.provisioning.UserDetailsManager
 import org.springframework.security.web.SecurityFilterChain
@@ -25,14 +22,6 @@ import javax.sql.DataSource
 @EnableWebSecurity
 @EnableMethodSecurity
 class SecurityConfig(private val exceptionHandler: GlobalExceptionHandler) {
-    @Bean
-    fun dataSource(): DataSource {
-        return EmbeddedDatabaseBuilder()
-            .setType(EmbeddedDatabaseType.H2)
-            .addScript(JdbcDaoImpl.DEFAULT_USER_SCHEMA_DDL_LOCATION)
-            .build()
-    }
-
     @Bean
     @Order(1)
     fun openActuatorEndpoint(http: HttpSecurity): SecurityFilterChain {
