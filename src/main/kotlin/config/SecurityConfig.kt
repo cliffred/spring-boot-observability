@@ -24,7 +24,7 @@ import javax.sql.DataSource
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-class SecurityConfig(private val securityExceptionHandler: SecurityExceptionHandler) {
+class SecurityConfig(private val exceptionHandler: GlobalExceptionHandler) {
     @Bean
     fun dataSource(): DataSource {
         return EmbeddedDatabaseBuilder()
@@ -82,11 +82,11 @@ class SecurityConfig(private val securityExceptionHandler: SecurityExceptionHand
 
     private fun HttpSecurityDsl.sharedConfig() {
         httpBasic {
-            authenticationEntryPoint = securityExceptionHandler
+            authenticationEntryPoint = exceptionHandler
         }
         exceptionHandling {
-            accessDeniedHandler = securityExceptionHandler
-            authenticationEntryPoint = securityExceptionHandler
+            accessDeniedHandler = exceptionHandler
+            authenticationEntryPoint = exceptionHandler
         }
     }
 
