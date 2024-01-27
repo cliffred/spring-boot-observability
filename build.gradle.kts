@@ -51,6 +51,7 @@ dependencies {
     testImplementation(libs.spring.boot.starter.test)
     testImplementation(libs.bundles.kotest)
     testImplementation(libs.spring.mockk)
+    testImplementation(libs.spring.security.test)
 
     testRuntimeOnly(libs.spring.boot.starter.webflux)
 }

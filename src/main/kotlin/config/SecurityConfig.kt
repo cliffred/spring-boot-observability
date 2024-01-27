@@ -88,6 +88,7 @@ class SecurityConfig(private val exceptionHandler: GlobalExceptionHandler) {
             accessDeniedHandler = exceptionHandler
             authenticationEntryPoint = exceptionHandler
         }
+        csrf { disable() }
     }
 
     @Bean
