@@ -31,6 +31,7 @@ repositories {
 }
 
 dependencies {
+    implementation(platform(libs.spring.cloud.bom))
     implementation(libs.spring.boot.starter.web)
     implementation(libs.spring.boot.starter.data.jdbc)
     implementation(libs.spring.boot.starter.security)
@@ -52,6 +53,9 @@ dependencies {
     testImplementation(libs.bundles.kotest)
     testImplementation(libs.spring.mockk)
     testImplementation(libs.spring.security.test)
+    testImplementation(libs.spring.boot.test.autoconfigure)
+    testImplementation(libs.kotlin.wiremock)
+    testImplementation(libs.spring.cloud.contract.wiremock)
 
     testRuntimeOnly(libs.spring.boot.starter.webflux)
 }

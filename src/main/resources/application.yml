@@ -48,3 +48,7 @@ logging:
 springdoc:
   swagger-ui:
     use-root-path: true
+
+httpclient:
+  httpbin:
+    url: https://httpbin.org
