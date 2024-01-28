@@ -7,6 +7,7 @@ import com.marcinziolo.kotlin.wiremock.get
 import com.marcinziolo.kotlin.wiremock.like
 import com.marcinziolo.kotlin.wiremock.returnsJson
 import io.kotest.core.spec.style.ShouldSpec
+import io.kotest.matchers.ints.shouldBeInRange
 import io.kotest.matchers.maps.shouldHaveKeys
 import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.string.shouldHaveLength
@@ -72,6 +73,29 @@ class TraceControllerTest(
                         traceParentHeader shouldHaveLength 55
                         traceParentHeader shouldContain traceId
                     }
+            }
+
+            should("return random number") {
+                webTestClient
+                    .get()
+                    .uri("/trace/random")
+                    .exchange()
+                    .expectStatus().isOk
+                    .expectBody<Int>()
+                    .value {
+                        it shouldBeInRange 1..10
+                    }
+            }
+
+            should("return trace-id and message on error") {
+                webTestClient
+                    .get()
+                    .uri("/trace/error")
+                    .exchange()
+                    .expectStatus().is5xxServerError
+                    .expectBody()
+                    .jsonPath("$.trace-id").exists()
+                    .jsonPath("$.message").isEqualTo("500 Something went wrong")
             }
         },
     )
