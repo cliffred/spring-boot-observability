@@ -12,7 +12,6 @@ import org.springframework.http.MediaType
 import org.springframework.http.ProblemDetail
 import org.springframework.security.access.AccessDeniedException
 import org.springframework.security.core.AuthenticationException
-import org.springframework.security.web.AuthenticationEntryPoint
 import org.springframework.security.web.access.AccessDeniedHandler
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -27,7 +26,7 @@ class GlobalExceptionHandler(
     private val tracer: Tracer,
     private val objectMapper: ObjectMapper,
     serverProperties: ServerProperties,
-) : ResponseEntityExceptionHandler(), AuthenticationEntryPoint, AccessDeniedHandler {
+) : ResponseEntityExceptionHandler(), AccessDeniedHandler {
     private val includeExceptionMessage = serverProperties.error.includeMessage == ALWAYS
     private val includeStacktrace = serverProperties.error.includeStacktrace == ALWAYS
 
@@ -40,19 +39,13 @@ class GlobalExceptionHandler(
         return createProblemDetail(ex, HttpStatus.INTERNAL_SERVER_ERROR, "Unknown error", null, null, request)
     }
 
-    override fun commence(
-        request: HttpServletRequest,
-        response: HttpServletResponse,
-        authException: AuthenticationException,
-    ) = handleSecurityException(ServletWebRequest(request), response, authException)
-
     override fun handle(
         request: HttpServletRequest,
         response: HttpServletResponse,
         accessDeniedException: AccessDeniedException,
     ) = handleSecurityException(ServletWebRequest(request), response, accessDeniedException)
 
-    private fun handleSecurityException(
+    fun handleSecurityException(
         request: WebRequest,
         response: HttpServletResponse,
         exception: Exception,

@@ -70,12 +70,13 @@ class SecurityConfig(private val exceptionHandler: GlobalExceptionHandler) {
     }
 
     private fun HttpSecurityDsl.sharedConfig() {
+        val entryPoint = BasicAuthenticationEntryPoint(exceptionHandler = exceptionHandler)
         httpBasic {
-            authenticationEntryPoint = exceptionHandler
+            authenticationEntryPoint = entryPoint
         }
         exceptionHandling {
             accessDeniedHandler = exceptionHandler
-            authenticationEntryPoint = exceptionHandler
+            authenticationEntryPoint = entryPoint
         }
         csrf { disable() }
     }
