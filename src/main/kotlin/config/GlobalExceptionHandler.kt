@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.context.request.ServletWebRequest
 import org.springframework.web.context.request.WebRequest
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
-import java.io.PrintWriter
-import java.io.StringWriter
 
 @ControllerAdvice
 class GlobalExceptionHandler(
@@ -87,15 +85,11 @@ class GlobalExceptionHandler(
             super.createProblemDetail(ex, status, defaultDetail, detailMessageCode, detailMessageArguments, request)
 
         if (includeExceptionMessage) {
-            problemDetail.setProperty("message", ex.localizedMessage)
+            problemDetail.setProperty("message", ex.message)
         }
 
         if (includeStacktrace) {
-            val stackTrace = StringWriter()
-            ex.printStackTrace(PrintWriter(stackTrace))
-            stackTrace.flush()
-
-            problemDetail.setProperty("trace", stackTrace.toString())
+            problemDetail.setProperty("trace", ex.stackTraceToString())
         }
 
         tracer.currentSpan()?.context()?.traceId()?.let {
