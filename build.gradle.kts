@@ -93,7 +93,8 @@ tasks.jacocoTestReport {
 
 tasks.bootBuildImage {
     if (System.getenv("GITHUB_ACTIONS") == "true") {
-        imageName = "ghcr.io/${System.getenv("GITHUB_REPOSITORY")}:latest"
+        imageName = "ghcr.io/${System.getenv("GITHUB_REPOSITORY")}:${project.version}"
+        tags = listOf("ghcr.io/${System.getenv("GITHUB_REPOSITORY")}:latest")
     }
     docker {
         publishRegistry {
