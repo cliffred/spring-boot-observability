@@ -69,7 +69,7 @@ dependencies {
     testRuntimeOnly(libs.spring.boot.starter.webflux)
 }
 
-tasks.withType<Test> {
+tasks.test {
     useJUnitPlatform()
     testLogging {
         events("PASSED", "SKIPPED", "FAILED")
@@ -88,6 +88,18 @@ sonar {
 tasks.jacocoTestReport {
     reports {
         xml.required = true
+    }
+}
+
+tasks.bootBuildImage {
+    if (System.getenv("GITHUB_ACTIONS") == "true") {
+        imageName = "ghcr.io/${System.getenv("GITHUB_REPOSITORY")}:latest"
+    }
+    docker {
+        publishRegistry {
+            username = System.getenv("CR_USERNAME")
+            password = System.getenv("CR_PASSWORD")
+        }
     }
 }
 

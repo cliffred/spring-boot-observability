@@ -14,6 +14,7 @@ jobs:
   build:
     permissions:
       checks: write
+      packages: write
     name: Compile and test
     runs-on: ubuntu-latest
     steps:
@@ -42,7 +43,13 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: ./gradlew build jacocoTestReport sonar
 
-      - name: Publish Test Report
+      - name: Publish container image
+        env:
+          CR_USERNAME: ${{ github.actor }}
+          CR_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+        run: ./gradlew bootBuildImage --publishImage
+
+      - name: Publish test report
         uses: mikepenz/action-junit-report@v4
         if: failure()
         with:
