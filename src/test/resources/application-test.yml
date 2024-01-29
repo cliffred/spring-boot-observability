@@ -4,3 +4,6 @@ httpclient:
 server:
   error:
     include-message: always
+logging:
+  level:
+    red.cliff: debug

@@ -12,20 +12,14 @@ import io.kotest.matchers.maps.shouldHaveKeys
 import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.string.shouldHaveLength
 import io.kotest.matchers.types.shouldBeTypeOf
-import org.springframework.boot.test.autoconfigure.actuate.observability.AutoConfigureObservability
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
-import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock
-import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.reactive.server.expectBody
+import red.cliff.observability.IntegrationTest
 import java.util.UUID
 
-@SpringBootTest
-@AutoConfigureMockMvc
-@AutoConfigureObservability
+@IntegrationTest
 @AutoConfigureWireMock(port = 0)
-@ActiveProfiles("test")
 class TraceControllerTest(
     private val webTestClient: WebTestClient,
     private val wiremock: WireMockServer,

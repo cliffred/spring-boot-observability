@@ -52,3 +52,7 @@ springdoc:
 httpclient:
   httpbin:
     url: https://httpbin.org
+
+auth:
+  token:
+    validity: 1h
