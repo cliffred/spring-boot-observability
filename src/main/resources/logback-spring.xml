@@ -32,12 +32,13 @@
             <message>
                 <pattern>
                     {
-                    "level":"%level",
-                    "class":"%logger{36}",
+                    "logger":"%logger",
                     "thread":"%thread",
                     "message": "%message",
                     "traceId": "%X{traceId}",
-                    "spanId": "%X{spanId}"
+                    "spanId": "%X{spanId}",
+                    "mdc": "%mdc",
+                    "exception": "%exception"
                     }
                 </pattern>
             </message>
