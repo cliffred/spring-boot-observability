@@ -8,7 +8,7 @@ kotlinter = "4.2.0"
 logback = "0.1.5"
 loki-appender = "1.4.2"
 sonar = "4.4.1.3373"
-spring-boot = "3.2.2"
+spring-boot = "3.3.0-M1"
 spring-cloud = "2023.0.0"
 spring-dependency-management = "1.1.4"
 spring-mockk = "4.0.2"
@@ -35,6 +35,7 @@ spring-boot-configuration-processor = { module = "org.springframework.boot:sprin
 spring-boot-devtools = { module = "org.springframework.boot:spring-boot-devtools" }
 spring-boot-docker-compose = { module = "org.springframework.boot:spring-boot-docker-compose" }
 spring-boot-starter-actuator = { module = "org.springframework.boot:spring-boot-starter-actuator" }
+spring-boot-starter-aop = { module = "org.springframework.boot:spring-boot-starter-aop" }
 spring-boot-starter-data-jdbc = { module = "org.springframework.boot:spring-boot-starter-data-jdbc" }
 spring-boot-starter-oauth2-resource-server = { module = "org.springframework.boot:spring-boot-starter-oauth2-resource-server" }
 spring-boot-starter-security = { module = "org.springframework.boot:spring-boot-starter-security" }

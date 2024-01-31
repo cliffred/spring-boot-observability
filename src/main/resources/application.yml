@@ -40,6 +40,11 @@ management:
     resource-attributes:
       app: ${spring.application.name}
 
+micrometer:
+  observations:
+    annotations:
+      enabled: true
+
 info:
   application:
     name: ${spring.application.name}

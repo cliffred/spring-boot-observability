@@ -15,6 +15,7 @@ import red.cliff.observability.client.HttpBinClient
 class TraceController(
     private val tracer: Tracer,
     private val httpBinClient: HttpBinClient,
+    private val traceService: TraceService,
 ) {
     private val logger = KotlinLogging.logger {}
 
@@ -47,14 +48,15 @@ class TraceController(
     }
 
     @GetMapping("/random")
-    fun random(): Int {
-        val random = (1..10).random()
-        tracer.currentSpan()?.tag("random.value", random.toLong())
+    fun random(): String {
+        logger.info { "Call to /random" }
+        val random = traceService.generateRandomNumber(1, 10)
+        tracer.currentSpan()?.tag("random.value", random)
         when (random) {
             in 1..5 -> logger.info { "Random info" }
             in 6..8 -> logger.warn { "Random warning" }
             in 9..10 -> logger.error { "Random error" }
         }
-        return random
+        return "Random value: $random"
     }
 }
