@@ -18,11 +18,11 @@ fun withMockUser(
     require(!(authorities.isNotEmpty() && roles.isNotEmpty())) { "Supply authorities or roles, not both" }
     val grantedAuthorities = mutableListOf<GrantedAuthority>()
     authorities.forEach {
-        grantedAuthorities.add(SimpleGrantedAuthority(it))
+        grantedAuthorities += SimpleGrantedAuthority(it)
     }
     roles.forEach {
         require(!it.startsWith("ROLE_")) { "roles cannot start with ROLE_ Got $it" }
-        grantedAuthorities.add(SimpleGrantedAuthority("ROLE_$it"))
+        grantedAuthorities += SimpleGrantedAuthority("ROLE_$it")
     }
     val principal = User(userName, password, true, true, true, true, grantedAuthorities)
     val authentication: Authentication =
