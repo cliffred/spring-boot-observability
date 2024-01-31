@@ -46,13 +46,14 @@ datasources:
         enabled: true
       search:
         hide: false
-      tracesToLogs:
+      tracesToLogsV2:
         datasourceUid: loki
         filterBySpanID: false
-        filterByTraceID: true
-        mapTagNamesEnabled: false
+        filterByTraceID: false
+        customQuery: true
+        query: '{$${__tags}} |= "$${__trace.traceId}" | json | line_format "{{.app}}\t{{.level}}\t{{.spanId}}\t{{.message}}"'
         tags:
-          - compose_service
+          - key: app
     readOnly: false
     editable: true
   - uid: loki
