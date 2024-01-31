@@ -50,6 +50,8 @@ datasources:
         datasourceUid: loki
         filterBySpanID: false
         filterByTraceID: false
+        spanEndTimeShift: 5s
+        spanStartTimeShift: -5s
         customQuery: true
         query: '{$${__tags}} |= "$${__trace.traceId}" | json | line_format "{{.app}}\t{{.level}}\tspan_id={{.spanId}}\t{{.message}}"'
         tags:
