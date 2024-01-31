@@ -1,0 +1,10 @@
+### info
+GET {{uri}}/actuator/info
+
+### prometheus
+GET {{uri}}/actuator/prometheus
+Accept: application/openmetrics-text;version=1.0.0
+
+### httpexchanges
+GET {{uri}}/actuator/httpexchanges
+Authorization: Basic {{admin_user}} {{admin_pw}}

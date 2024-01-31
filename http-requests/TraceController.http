@@ -1,0 +1,11 @@
+### api call
+GET {{uri}}/trace/api-call
+
+### info
+GET {{uri}}/trace/info
+
+### random
+GET {{uri}}/trace/random
+
+### error
+GET {{uri}}/trace/error
