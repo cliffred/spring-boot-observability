@@ -75,9 +75,10 @@ class TraceControllerTest(
                     .uri("/trace/random")
                     .exchange()
                     .expectStatus().isOk
-                    .expectBody<Int>()
+                    .expectBody<String>()
                     .value {
-                        it shouldBeInRange 1..10
+                        val number = it.substringAfterLast(" ").toInt()
+                        number shouldBeInRange 1..10
                     }
             }
 
