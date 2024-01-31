@@ -10,7 +10,7 @@ import java.security.KeyPairGenerator
 import java.security.interfaces.RSAPrivateKey
 import java.security.interfaces.RSAPublicKey
 
-@ConfigurationProperties(prefix = "rsa")
+@ConfigurationProperties(prefix = "service.rsa")
 data class RsaKeyProperties(val publicKey: RSAPublicKey? = null, val privateKey: RSAPrivateKey? = null)
 
 data class RsaKeyPair(val publicKey: RSAPublicKey, val privateKey: RSAPrivateKey)

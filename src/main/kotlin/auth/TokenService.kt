@@ -12,7 +12,7 @@ import java.time.Instant
 @Service
 class TokenService(
     private val encoder: JwtEncoder,
-    @Value("\${auth.token.validity}") private val validity: Duration,
+    @Value("\${service.auth.token.validity}") private val validity: Duration,
 ) {
     fun createToken(authentication: Authentication): String {
         val authorities = authentication.authorities.joinToString(" ") { it.authority }

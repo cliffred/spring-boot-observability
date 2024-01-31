@@ -49,10 +49,11 @@ springdoc:
   swagger-ui:
     use-root-path: true
 
-httpclient:
-  httpbin:
-    url: https://httpbin.org
+service:
+  httpclient:
+    httpbin:
+      url: https://httpbin.org
 
-auth:
-  token:
-    validity: 1h
+  auth:
+    token:
+      validity: 1h

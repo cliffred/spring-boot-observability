@@ -11,7 +11,7 @@ import org.springframework.web.service.invoker.createClient
 @Configuration
 class HttpClientConfig(
     private val restClientBuilder: RestClient.Builder,
-    @Value("\${httpclient.httpbin.url}") private val httpBinUrl: String
+    @Value("\${service.httpclient.httpbin.url}") private val httpBinUrl: String
 ) {
     @Bean
     fun httpBinClient(): HttpBinClient {

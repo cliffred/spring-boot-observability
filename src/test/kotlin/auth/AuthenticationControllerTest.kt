@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RestController
 import red.cliff.observability.IntegrationTest
 
 @IntegrationTest
-@TestPropertySource(properties = ["rsa.private-key=classpath:certs/private.pem", "rsa.public-key=classpath:certs/public.pem"])
+@TestPropertySource(
+    properties = ["service.rsa.private-key=classpath:certs/private.pem", "service.rsa.public-key=classpath:certs/public.pem"]
+)
 class AuthenticationControllerTestRsaFromFile(private val webTestClient: WebTestClient) : ShouldSpec(
     {
         testAuthentication(webTestClient)
