@@ -51,7 +51,7 @@ datasources:
         filterBySpanID: false
         filterByTraceID: false
         customQuery: true
-        query: '{$${__tags}} |= "$${__trace.traceId}" | json | line_format "{{.app}}\t{{.level}}\t{{.spanId}}\t{{.message}}"'
+        query: '{$${__tags}} |= "$${__trace.traceId}" | json | line_format "{{.app}}\t{{.level}}\tspan_id={{.spanId}}\t{{.message}}"'
         tags:
           - key: app
     readOnly: false
