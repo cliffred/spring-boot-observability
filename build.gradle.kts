@@ -43,6 +43,7 @@ dependencies {
     implementation(libs.spring.boot.starter.data.jdbc)
     implementation(libs.spring.boot.starter.security)
     implementation(libs.spring.boot.starter.oauth2.resource.server)
+    implementation(libs.spring.boot.starter.aop)
     implementation(libs.spring.boot.starter.actuator)
     implementation(libs.jackson.module.kotlin)
     implementation(libs.bundles.kotlin)
