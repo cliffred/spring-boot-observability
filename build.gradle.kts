@@ -9,10 +9,10 @@ plugins {
     alias(libs.plugins.sonar)
     alias(libs.plugins.git.properties)
     id("jacoco")
+    id("release-plugin")
 }
 
 group = "red.cliff"
-version = "0.0.1-SNAPSHOT"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_21
