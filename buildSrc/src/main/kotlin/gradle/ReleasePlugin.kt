@@ -16,7 +16,8 @@ import java.io.File
 /**
  * Release plugin
  *
- * Manages the project version using git tags. Uses a CalVer version scheme with the pattern yyyy.MM.dd_#,
+ * Manages the project version using git tags.
+ * Uses a CalVer version scheme with the pattern yyyy.MM.dd_#,
  * e.g. 2021.05.21_7 means the 7th release of 2021-05-21.
  *
  * Use the release task to create a new version git.

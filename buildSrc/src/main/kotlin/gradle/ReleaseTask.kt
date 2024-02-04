@@ -7,6 +7,7 @@ import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.UntrackedTask
 import red.cliff.gradle.CalVer
+import red.cliff.gradle.Type
 import javax.inject.Inject
 
 @UntrackedTask(because = "Tracked by git state")
@@ -23,10 +24,10 @@ abstract class ReleaseTask @Inject constructor(
         val gitState = gitStateProvider.get()
         check(gitState.clean) { "Workspace should be clean to release." }
 
-        val headReleased = gitState.currentVersion?.snapshot?.not() ?: false
+        val headReleased = gitState.currentVersion?.type == Type.FINAL
         check(!headReleased) { "Current head is already released with version ${gitState.currentVersion}." }
 
-        val releaseVersion = versionProvider.get().release()
+        val releaseVersion = versionProvider.get().final()
         logger.lifecycle("Setting version tag $releaseVersion")
 
         repository.use { repo ->
