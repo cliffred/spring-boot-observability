@@ -22,10 +22,12 @@ class TraceController(
     @GetMapping("/api-call")
     fun apiCall(): Map<*, *> {
         val response = httpBinClient.get()
-        val traceparentHeader = response["headers"]["Traceparent"]?.asText() ?: "-"
+        val responseHeaders = response["headers"]
+        val traceparentHeader = responseHeaders["Traceparent"]?.asText() ?: "-"
 
         val traceContext = tracer.currentSpan()?.context() ?: TraceContext.NOOP
 
+        logger.info { "The following headers were in the request: $responseHeaders" }
         logger.info { "Returning result with traceId ${traceContext.traceId()}" }
 
         return mapOf(
