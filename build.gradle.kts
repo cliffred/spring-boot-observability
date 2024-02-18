@@ -65,7 +65,10 @@ dependencies {
     testImplementation(libs.spring.mockk)
     testImplementation(libs.spring.security.test)
     testImplementation(libs.spring.boot.test.autoconfigure)
-    testImplementation(libs.kotlin.wiremock)
+    testImplementation(libs.kotlin.wiremock) {
+        // conflicts with spring cloud contract wiremock
+        exclude("org.wiremock", "wiremock-standalone")
+    }
     testImplementation(libs.spring.cloud.contract.wiremock)
 
     testRuntimeOnly(libs.spring.boot.starter.webflux)
