@@ -1,0 +1,15 @@
+### get customers
+GET {{uri}}/api/customers
+Authorization: Basic {{admin_user}} {{admin_pw}}
+
+### save customer
+POST {{uri}}/api/customers
+Content-Type: application/json
+Authorization: Basic {{admin_user}} {{admin_pw}}
+
+{
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "j.doe@example.com"
+}
+
