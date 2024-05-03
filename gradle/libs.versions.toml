@@ -12,7 +12,7 @@ loki-appender = "1.5.1"
 sonar = "4.4.1.3373"
 spring-boot = "3.3.0-RC1"
 spring-cloud = "2023.0.1"
-spring-dependency-management = "1.1.4"
+spring-dependency-management = "1.1.5"
 spring-mockk = "4.0.2"
 springdoc = "2.5.0"
 
