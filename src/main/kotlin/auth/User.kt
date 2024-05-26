@@ -12,6 +12,8 @@ data class User(
     val roles: Set<String>,
 ) : UserDetails {
     override fun getAuthorities() = roles.map { SimpleGrantedAuthority(it) }
+
     override fun getUsername() = username
+
     override fun getPassword() = password
 }

@@ -21,15 +21,15 @@ class InsertTestData(
     private val customerService: CustomerService,
     private val passwordEncoder: PasswordEncoder,
 ) {
-
     private val faker = Faker()
 
     @EventListener(ApplicationReadyEvent::class)
-    fun testData(): Unit = runBlocking {
-        clearData()
-        testUsers()
-        testCustomers()
-    }
+    fun testData(): Unit =
+        runBlocking {
+            clearData()
+            testUsers()
+            testCustomers()
+        }
 
     private suspend fun clearData() {
         userRepository.deleteAll()
@@ -65,5 +65,4 @@ class InsertTestData(
             )
         }
     }
-
 }

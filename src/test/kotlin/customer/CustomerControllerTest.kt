@@ -19,48 +19,48 @@ class CustomerControllerTest(
     @MockkBean private val customerService: CustomerService,
     private val webTestClient: WebTestClient,
 ) : ShouldSpec(
-    {
-        should("return all customers") {
-            withMockUser()
-            val customer =
-                Customer(
-                    id = "1",
-                    firstName = "John",
-                    lastName = "Doe",
-                    email = "j.doe@example.org",
-                )
-            every { customerService.getAllCustomers() } returns flowOf(customer)
+        {
+            should("return all customers") {
+                withMockUser()
+                val customer =
+                    Customer(
+                        id = "1",
+                        firstName = "John",
+                        lastName = "Doe",
+                        email = "j.doe@example.org",
+                    )
+                every { customerService.getAllCustomers() } returns flowOf(customer)
 
-            webTestClient
-                .get()
-                .uri("/api/customers")
-                .exchange()
-                .expectStatus().isOk
-                .expectBodyList<Customer>()
-                .hasSize(1)
-                .contains(customer)
-        }
+                webTestClient
+                    .get()
+                    .uri("/api/customers")
+                    .exchange()
+                    .expectStatus().isOk
+                    .expectBodyList<Customer>()
+                    .hasSize(1)
+                    .contains(customer)
+            }
 
-        should("add new user") {
-            withMockUser()
-            val customer =
-                Customer(
-                    id = "1",
-                    firstName = "John",
-                    lastName = "Doe",
-                    email = "j.doe@example.org",
-                )
+            should("add new user") {
+                withMockUser()
+                val customer =
+                    Customer(
+                        id = "1",
+                        firstName = "John",
+                        lastName = "Doe",
+                        email = "j.doe@example.org",
+                    )
 
-            coEvery { customerService.createCustomer(any()) } answers { firstArg() }
+                coEvery { customerService.createCustomer(any()) } answers { firstArg() }
 
-            webTestClient
-                .post()
-                .uri("/api/customers")
-                .bodyValue(customer)
-                .exchange()
-                .expectStatus().isOk
+                webTestClient
+                    .post()
+                    .uri("/api/customers")
+                    .bodyValue(customer)
+                    .exchange()
+                    .expectStatus().isOk
 
-            coVerify { customerService.createCustomer(customer) }
-        }
-    },
-)
+                coVerify { customerService.createCustomer(customer) }
+            }
+        },
+    )

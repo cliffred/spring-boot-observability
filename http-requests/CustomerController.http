@@ -13,3 +13,7 @@ Authorization: Basic {{admin_user}} {{admin_pw}}
     "email": "j.doe@example.com"
 }
 
+### watch customer events
+GET {{uri}}/api/customers/events
+Connection: keep-alive
+Authorization: Basic {{admin_user}} {{admin_pw}}

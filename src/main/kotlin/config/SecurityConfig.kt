@@ -29,7 +29,6 @@ import org.springframework.security.oauth2.jwt.NimbusJwtEncoder
 import org.springframework.security.web.SecurityFilterChain
 import red.cliff.observability.auth.UserRepository
 
-
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
