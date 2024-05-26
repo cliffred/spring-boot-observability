@@ -6,6 +6,9 @@ spring:
   threads:
     virtual:
       enabled: true
+  data:
+    mongodb:
+      database: demo
 
 management:
   otlp:

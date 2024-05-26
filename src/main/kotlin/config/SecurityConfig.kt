@@ -4,6 +4,7 @@ import com.nimbusds.jose.jwk.JWKSet
 import com.nimbusds.jose.jwk.RSAKey
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet
 import com.nimbusds.jose.proc.SecurityContext
+import kotlinx.coroutines.runBlocking
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest
 import org.springframework.boot.actuate.health.HealthEndpoint
 import org.springframework.boot.actuate.info.InfoEndpoint
@@ -17,15 +18,17 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.invoke
 import org.springframework.security.config.http.SessionCreationPolicy
-import org.springframework.security.core.userdetails.User
+import org.springframework.security.core.userdetails.UserDetailsService
+import org.springframework.security.core.userdetails.UsernameNotFoundException
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.oauth2.jwt.JwtDecoder
 import org.springframework.security.oauth2.jwt.JwtEncoder
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder
-import org.springframework.security.provisioning.JdbcUserDetailsManager
-import org.springframework.security.provisioning.UserDetailsManager
 import org.springframework.security.web.SecurityFilterChain
-import javax.sql.DataSource
+import red.cliff.observability.auth.UserRepository
+
 
 @Configuration
 @EnableWebSecurity
@@ -33,6 +36,7 @@ import javax.sql.DataSource
 class SecurityConfig(
     private val exceptionHandler: GlobalExceptionHandler,
     private val keyPair: RsaKeyPair,
+    private val userRepository: UserRepository,
 ) {
     @Bean
     @Order(1)
@@ -115,22 +119,13 @@ class SecurityConfig(
     }
 
     @Bean
-    fun users(dataSource: DataSource): UserDetailsManager {
-        val user =
-            User.withDefaultPasswordEncoder()
-                .username("user")
-                .password("user")
-                .roles("USER")
-                .build()
-        val admin =
-            User.withDefaultPasswordEncoder()
-                .username("admin")
-                .password("admin")
-                .roles("ADMIN", "USER")
-                .build()
-        return JdbcUserDetailsManager(dataSource).apply {
-            createUser(user)
-            createUser(admin)
+    fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
+
+    @Bean
+    fun userDetailsService(encoder: PasswordEncoder): UserDetailsService =
+        UserDetailsService { username ->
+            runBlocking {
+                userRepository.findByUsername(username) ?: throw UsernameNotFoundException("User not found: $username")
+            }
         }
-    }
 }

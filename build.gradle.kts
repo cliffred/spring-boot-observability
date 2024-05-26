@@ -40,7 +40,7 @@ repositories {
 dependencies {
     implementation(platform(libs.spring.cloud.bom))
     implementation(libs.spring.boot.starter.web)
-    implementation(libs.spring.boot.starter.data.jdbc)
+    implementation(libs.spring.boot.starter.data.mongodb)
     implementation(libs.spring.boot.starter.security)
     implementation(libs.spring.boot.starter.oauth2.resource.server)
     implementation(libs.spring.boot.starter.aop)
@@ -48,6 +48,7 @@ dependencies {
     implementation(libs.jackson.module.kotlin)
     implementation(libs.bundles.kotlin)
     implementation(libs.kotlin.logging)
+    implementation(libs.faker)
     implementation(libs.bundles.logging)
     implementation(libs.bundles.tracing)
     implementation(libs.springdoc)
@@ -58,7 +59,6 @@ dependencies {
     developmentOnly(libs.spring.boot.docker.compose)
 
     runtimeOnly(libs.micrometer.registry.prometheus)
-    runtimeOnly(libs.h2)
 
     testImplementation(libs.spring.boot.starter.test)
     testImplementation(libs.bundles.kotest)

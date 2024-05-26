@@ -1,5 +1,7 @@
 package red.cliff.observability.customer
 
-import org.springframework.data.repository.ListCrudRepository
+import org.springframework.data.repository.kotlin.CoroutineCrudRepository
+import org.springframework.stereotype.Repository
 
-interface CustomerRepository : ListCrudRepository<Customer, Long>
+@Repository
+interface CustomerRepository : CoroutineCrudRepository<Customer, String>

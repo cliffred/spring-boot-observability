@@ -1,4 +1,5 @@
 [versions]
+faker = "2.0.0-rc.4"
 git-properties = "2.4.2"
 jgit = "6.9.0.202403050737-r"
 kotest = "5.9.0"
@@ -17,7 +18,7 @@ spring-mockk = "4.0.2"
 springdoc = "2.5.0"
 
 [libraries]
-h2 = { module = "com.h2database:h2" }
+faker = { module = "io.github.serpro69:kotlin-faker", version.ref = "faker" }
 jackson-module-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin" }
 jgit = { module = "org.eclipse.jgit:org.eclipse.jgit", version.ref = "jgit" }
 kotest-assertions-core = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
@@ -39,7 +40,7 @@ spring-boot-devtools = { module = "org.springframework.boot:spring-boot-devtools
 spring-boot-docker-compose = { module = "org.springframework.boot:spring-boot-docker-compose" }
 spring-boot-starter-actuator = { module = "org.springframework.boot:spring-boot-starter-actuator" }
 spring-boot-starter-aop = { module = "org.springframework.boot:spring-boot-starter-aop" }
-spring-boot-starter-data-jdbc = { module = "org.springframework.boot:spring-boot-starter-data-jdbc" }
+spring-boot-starter-data-mongodb = { module = "org.springframework.boot:spring-boot-starter-data-mongodb-reactive" }
 spring-boot-starter-oauth2-resource-server = { module = "org.springframework.boot:spring-boot-starter-oauth2-resource-server" }
 spring-boot-starter-security = { module = "org.springframework.boot:spring-boot-starter-security" }
 spring-boot-starter-test = { module = "org.springframework.boot:spring-boot-starter-test" }
