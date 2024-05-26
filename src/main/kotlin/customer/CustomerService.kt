@@ -16,6 +16,6 @@ class CustomerService(
 
     @Transactional
     suspend fun createCustomer(customer: Customer): Customer {
-        return customerRepository.save(customer)
+        return customerRepository.save(customer).also { eventRepository.save(CustomerEvent(type = EventType.CREATED, payload = it)) }
     }
 }

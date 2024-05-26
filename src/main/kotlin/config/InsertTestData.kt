@@ -9,12 +9,16 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import red.cliff.observability.auth.User
 import red.cliff.observability.auth.UserRepository
 import red.cliff.observability.customer.Customer
+import red.cliff.observability.customer.CustomerEventRepository
 import red.cliff.observability.customer.CustomerRepository
+import red.cliff.observability.customer.CustomerService
 
 @Configuration
 class InsertTestData(
     private val userRepository: UserRepository,
     private val customerRepository: CustomerRepository,
+    private val customerEventRepository: CustomerEventRepository,
+    private val customerService: CustomerService,
     private val passwordEncoder: PasswordEncoder,
 ) {
 
@@ -22,12 +26,18 @@ class InsertTestData(
 
     @EventListener(ApplicationReadyEvent::class)
     fun testData(): Unit = runBlocking {
+        clearData()
         testUsers()
         testCustomers()
     }
 
-    private suspend fun testUsers() {
+    private suspend fun clearData() {
         userRepository.deleteAll()
+        customerRepository.deleteAll()
+        customerEventRepository.deleteAll()
+    }
+
+    private suspend fun testUsers() {
         userRepository.save(
             User(
                 username = "user",
@@ -45,14 +55,14 @@ class InsertTestData(
     }
 
     suspend fun testCustomers() {
-        customerRepository.deleteAll()
         repeat(10) {
-            val customer = Customer(
-                firstName = faker.name.firstName(),
-                lastName = faker.name.lastName(),
-                email = faker.internet.email(),
+            customerService.createCustomer(
+                Customer(
+                    firstName = faker.name.firstName(),
+                    lastName = faker.name.lastName(),
+                    email = faker.internet.email(),
+                ),
             )
-            customerRepository.save(customer)
         }
     }
 
