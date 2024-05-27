@@ -9,16 +9,16 @@ import org.springframework.stereotype.Component
 
 @Component
 class EventNotifier(private val customerService: CustomerService) {
-    private val _eventNotifier = MutableSharedFlow<Unit>()
+    private val eventNotifier = MutableSharedFlow<Unit>()
     private var offset: String = "0".repeat(24)
 
-    fun subscribe(): Flow<Unit> = _eventNotifier
+    fun subscribe(): Flow<Unit> = eventNotifier
 
     @Scheduled(fixedRate = 1000)
     fun pollEvents(): Unit =
         runBlocking {
             customerService.getCustomerEvents(offset).toList().takeIf { it.isNotEmpty() }?.let {
-                _eventNotifier.emit(Unit)
+                eventNotifier.emit(Unit)
                 offset = it.last().id!!
             }
         }
