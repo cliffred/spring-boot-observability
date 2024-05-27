@@ -72,6 +72,7 @@ dependencies {
     testImplementation(libs.spring.cloud.contract.wiremock)
 
     testRuntimeOnly(libs.spring.boot.starter.webflux)
+    testRuntimeOnly(libs.spring.boot.docker.compose)
 }
 
 tasks.test {

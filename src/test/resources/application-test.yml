@@ -8,3 +8,8 @@ server:
 logging:
   level:
     red.cliff: debug
+spring:
+  docker:
+    compose:
+      skip:
+        in-tests: false

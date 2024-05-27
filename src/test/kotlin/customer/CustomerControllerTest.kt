@@ -17,6 +17,7 @@ import red.cliff.observability.withMockUser
 @Import(TestConfig::class)
 class CustomerControllerTest(
     @MockkBean private val customerService: CustomerService,
+    @MockkBean private val eventNotifier: EventNotifier,
     private val webTestClient: WebTestClient,
 ) : ShouldSpec(
         {
