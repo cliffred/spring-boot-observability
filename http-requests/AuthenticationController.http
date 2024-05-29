@@ -1,3 +1,7 @@
 ### Token
 POST {{uri}}/api/token
 Authorization: Basic {{admin_user}} {{admin_pw}}
+
+> {%
+    client.global.set("auth_token", response.body);
+%}
