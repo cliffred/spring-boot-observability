@@ -2,7 +2,6 @@ package red.cliff.observability.config
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.micrometer.tracing.Tracer
-import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.boot.autoconfigure.web.ErrorProperties.IncludeAttribute.ALWAYS
 import org.springframework.boot.autoconfigure.web.ServerProperties
@@ -12,10 +11,8 @@ import org.springframework.http.MediaType
 import org.springframework.http.ProblemDetail
 import org.springframework.security.access.AccessDeniedException
 import org.springframework.security.core.AuthenticationException
-import org.springframework.security.web.access.AccessDeniedHandler
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
-import org.springframework.web.context.request.ServletWebRequest
 import org.springframework.web.context.request.WebRequest
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
 
@@ -24,7 +21,7 @@ class GlobalExceptionHandler(
     private val tracer: Tracer,
     private val objectMapper: ObjectMapper,
     serverProperties: ServerProperties,
-) : ResponseEntityExceptionHandler(), AccessDeniedHandler {
+) : ResponseEntityExceptionHandler() {
     private val includeExceptionMessage = serverProperties.error.includeMessage == ALWAYS
     private val includeStacktrace = serverProperties.error.includeStacktrace == ALWAYS
 
@@ -37,12 +34,7 @@ class GlobalExceptionHandler(
         return createProblemDetail(ex, HttpStatus.INTERNAL_SERVER_ERROR, "Unknown error", null, null, request)
     }
 
-    override fun handle(
-        request: HttpServletRequest,
-        response: HttpServletResponse,
-        accessDeniedException: AccessDeniedException,
-    ) = handleSecurityException(ServletWebRequest(request), response, accessDeniedException)
-
+    @ExceptionHandler(AuthenticationException::class, AccessDeniedException::class)
     fun handleSecurityException(
         request: WebRequest,
         response: HttpServletResponse,
@@ -52,15 +44,24 @@ class GlobalExceptionHandler(
             when (exception) {
                 is AuthenticationException ->
                     createProblemDetail(
-                        exception,
-                        HttpStatus.UNAUTHORIZED,
-                        "Not authenticated",
-                        null,
-                        null,
-                        request,
+                        ex = exception,
+                        status = HttpStatus.UNAUTHORIZED,
+                        defaultDetail = "Not authenticated",
+                        detailMessageCode = null,
+                        detailMessageArguments = null,
+                        request = request,
                     )
 
-                is AccessDeniedException -> createProblemDetail(exception, HttpStatus.FORBIDDEN, "Access denied", null, null, request)
+                is AccessDeniedException ->
+                    createProblemDetail(
+                        ex = exception,
+                        status = HttpStatus.FORBIDDEN,
+                        defaultDetail = "Access denied",
+                        detailMessageCode = null,
+                        detailMessageArguments = null,
+                        request = request,
+                    )
+
                 else -> handleUnknownException(exception, request)
             }
         logger.debug { "No access: ${exception.message}" }

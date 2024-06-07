@@ -33,7 +33,7 @@ import red.cliff.observability.auth.UserRepository
 @EnableWebSecurity
 @EnableMethodSecurity
 class SecurityConfig(
-    private val exceptionHandler: GlobalExceptionHandler,
+    private val problemSupport: SecurityProblemSupport,
     private val keyPair: RsaKeyPair,
     private val userRepository: UserRepository,
 ) {
@@ -85,13 +85,12 @@ class SecurityConfig(
     }
 
     private fun HttpSecurityDsl.sharedConfig() {
-        val entryPoint = BasicAuthenticationEntryPoint(exceptionHandler = exceptionHandler)
         httpBasic {
-            authenticationEntryPoint = entryPoint
+            authenticationEntryPoint = problemSupport
         }
         exceptionHandling {
-            accessDeniedHandler = exceptionHandler
-            authenticationEntryPoint = entryPoint
+            accessDeniedHandler = problemSupport
+            authenticationEntryPoint = problemSupport
         }
         sessionManagement {
             sessionCreationPolicy = SessionCreationPolicy.STATELESS
