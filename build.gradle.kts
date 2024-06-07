@@ -104,8 +104,8 @@ tasks.bootBuildImage {
     }
     docker {
         publishRegistry {
-            username = System.getenv("CR_USERNAME")
-            password = System.getenv("CR_PASSWORD")
+            username = providers.environmentVariable("CR_USERNAME")
+            password = providers.environmentVariable("CR_PASSWORD")
         }
     }
 }
