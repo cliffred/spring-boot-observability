@@ -45,7 +45,8 @@ class ReleasePlugin : Plugin<Project> {
         project.tasks.register("currentVersion") {
             group = "release"
             doLast {
-                logger.quiet("Version: ${project.version}")
+                val prefix = if (project.hasProperty("release.quiet")) "" else "Version: "
+                logger.quiet("$prefix${project.version}")
             }
         }
 

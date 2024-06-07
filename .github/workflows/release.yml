@@ -38,6 +38,8 @@ jobs:
           git config user.email "release@users.noreply.github.com"
           ./gradlew release
           git push --tags
+          VERSION=$(./gradlew currentVersion --quiet -Prelease.quiet)
+          echo "### Released $VERSION" >> $GITHUB_STEP_SUMMARY
 
       - name: Publish container image
         env:
