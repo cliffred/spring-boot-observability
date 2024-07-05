@@ -21,7 +21,8 @@ class TokenService(
         val validity = now.plus(validity)
 
         val claims =
-            JwtClaimsSet.builder()
+            JwtClaimsSet
+                .builder()
                 .issuedAt(now)
                 .expiresAt(validity)
                 .subject(authentication.name)

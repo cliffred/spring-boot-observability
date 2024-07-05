@@ -36,7 +36,8 @@ class CustomerControllerTest(
                     .get()
                     .uri("/api/customers")
                     .exchange()
-                    .expectStatus().isOk
+                    .expectStatus()
+                    .isOk
                     .expectBodyList<Customer>()
                     .hasSize(1)
                     .contains(customer)
@@ -59,7 +60,8 @@ class CustomerControllerTest(
                     .uri("/api/customers")
                     .bodyValue(customer)
                     .exchange()
-                    .expectStatus().isOk
+                    .expectStatus()
+                    .isOk
 
                 coVerify { customerService.createCustomer(customer) }
             }

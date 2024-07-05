@@ -10,14 +10,11 @@ class CustomerService(
     private val customerRepository: CustomerRepository,
     private val eventRepository: CustomerEventRepository,
 ) {
-    fun getAllCustomers(): Flow<Customer> {
-        return customerRepository.findAll()
-    }
+    fun getAllCustomers(): Flow<Customer> = customerRepository.findAll()
 
     @Transactional
-    suspend fun createCustomer(customer: Customer): Customer {
-        return customerRepository.save(customer).also { eventRepository.save(CustomerEvent(type = EventType.CREATED, payload = it)) }
-    }
+    suspend fun createCustomer(customer: Customer): Customer =
+        customerRepository.save(customer).also { eventRepository.save(CustomerEvent(type = EventType.CREATED, payload = it)) }
 
     fun getCustomerEvents(offset: String?): Flow<CustomerEvent> {
         val objectId = offset?.let { ObjectId(it) } ?: ObjectId("0".repeat(24))

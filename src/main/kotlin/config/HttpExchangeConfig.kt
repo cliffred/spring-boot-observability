@@ -8,7 +8,5 @@ import org.springframework.context.annotation.Configuration
 @Configuration
 class HttpExchangeConfig {
     @Bean
-    fun httpExchangeRepository(): HttpExchangeRepository {
-        return InMemoryHttpExchangeRepository()
-    }
+    fun httpExchangeRepository(): HttpExchangeRepository = InMemoryHttpExchangeRepository()
 }

@@ -100,16 +100,16 @@ class SecurityConfig(
     }
 
     @Bean
-    fun jwtDecoder(): JwtDecoder {
-        return NimbusJwtDecoder
+    fun jwtDecoder(): JwtDecoder =
+        NimbusJwtDecoder
             .withPublicKey(keyPair.publicKey)
             .build()
-    }
 
     @Bean
     fun jwtEncoder(): JwtEncoder {
         val rsaKey =
-            RSAKey.Builder(keyPair.publicKey)
+            RSAKey
+                .Builder(keyPair.publicKey)
                 .privateKey(keyPair.privateKey)
                 .build()
         val jwkSet = ImmutableJWKSet<SecurityContext>(JWKSet(rsaKey))

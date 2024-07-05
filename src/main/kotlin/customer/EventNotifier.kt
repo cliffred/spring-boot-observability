@@ -8,7 +8,9 @@ import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 
 @Component
-class EventNotifier(private val customerService: CustomerService) {
+class EventNotifier(
+    private val customerService: CustomerService
+) {
     private val eventNotifier = MutableSharedFlow<Unit>()
     private var offset: String = "0".repeat(24)
 

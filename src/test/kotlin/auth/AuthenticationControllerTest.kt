@@ -12,18 +12,22 @@ import red.cliff.observability.IntegrationTest
 @TestPropertySource(
     properties = ["service.rsa.private-key=classpath:certs/private.pem", "service.rsa.public-key=classpath:certs/public.pem"]
 )
-class AuthenticationControllerTestRsaFromFile(private val webTestClient: WebTestClient) : ShouldSpec(
-    {
-        testAuthentication(webTestClient)
-    },
-)
+class AuthenticationControllerTestRsaFromFile(
+    private val webTestClient: WebTestClient
+) : ShouldSpec(
+        {
+            testAuthentication(webTestClient)
+        },
+    )
 
 @IntegrationTest
-class AuthenticationControllerTestRsaGenerated(private val webTestClient: WebTestClient) : ShouldSpec(
-    {
-        testAuthentication(webTestClient)
-    },
-)
+class AuthenticationControllerTestRsaGenerated(
+    private val webTestClient: WebTestClient
+) : ShouldSpec(
+        {
+            testAuthentication(webTestClient)
+        },
+    )
 
 private fun ShouldSpec.testAuthentication(webTestClient: WebTestClient) {
     should("return 401 when not authenticated") {

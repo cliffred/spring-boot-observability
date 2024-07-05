@@ -20,8 +20,9 @@ class SecurityProblemSupport(
     @Qualifier("handlerExceptionResolver")
     private val resolver: HandlerExceptionResolver,
     private val realmName: String = "Realm",
-) :
-    AuthenticationEntryPoint, AuthenticationFailureHandler, AccessDeniedHandler {
+) : AuthenticationEntryPoint,
+    AuthenticationFailureHandler,
+    AccessDeniedHandler {
     override fun commence(
         request: HttpServletRequest,
         response: HttpServletResponse,

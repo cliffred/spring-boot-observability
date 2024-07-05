@@ -70,7 +70,8 @@ class CustomerController(
 }
 
 private fun CustomerEvent.toSse() =
-    ServerSentEvent.builder<CustomerEvent>(this)
+    ServerSentEvent
+        .builder<CustomerEvent>(this)
         .id(id.toString())
         .event(type.toString())
         .build()

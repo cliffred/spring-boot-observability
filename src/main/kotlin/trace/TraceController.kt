@@ -39,9 +39,7 @@ class TraceController(
     }
 
     @GetMapping("/error")
-    fun error(): Map<*, *> {
-        throw HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "Something went wrong")
-    }
+    fun error(): Map<*, *> = throw HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "Something went wrong")
 
     @GetMapping("/info")
     fun health(): String {

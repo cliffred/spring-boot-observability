@@ -30,7 +30,8 @@ class TraceControllerTest(
                     .get()
                     .uri("/trace/info")
                     .exchange()
-                    .expectStatus().isOk
+                    .expectStatus()
+                    .isOk
                     .expectBody<String>()
                     .isEqualTo("OK")
             }
@@ -58,7 +59,8 @@ class TraceControllerTest(
                     .uri("/trace/api-call")
                     .header("traceparent", traceParent)
                     .exchange()
-                    .expectStatus().isOk
+                    .expectStatus()
+                    .isOk
                     .expectBody<Map<String, *>>()
                     .value {
                         it.shouldHaveKeys("traceparentHeader")
@@ -74,7 +76,8 @@ class TraceControllerTest(
                     .get()
                     .uri("/trace/random")
                     .exchange()
-                    .expectStatus().isOk
+                    .expectStatus()
+                    .isOk
                     .expectBody<String>()
                     .value {
                         val number = it.substringAfterLast(" ").toInt()
@@ -87,10 +90,13 @@ class TraceControllerTest(
                     .get()
                     .uri("/trace/error")
                     .exchange()
-                    .expectStatus().is5xxServerError
+                    .expectStatus()
+                    .is5xxServerError
                     .expectBody()
-                    .jsonPath("$.trace-id").exists()
-                    .jsonPath("$.message").isEqualTo("500 Something went wrong")
+                    .jsonPath("$.trace-id")
+                    .exists()
+                    .jsonPath("$.message")
+                    .isEqualTo("500 Something went wrong")
             }
         },
     )

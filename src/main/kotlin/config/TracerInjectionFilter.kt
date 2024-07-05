@@ -14,7 +14,9 @@ private const val CUSTOM_TX_ID = "custom_tx_id"
 private const val TRACE_ID_HEADER = "Trace-Id"
 
 @Component
-class TracerInjectionFilter(private val tracer: Tracer) : OncePerRequestFilter() {
+class TracerInjectionFilter(
+    private val tracer: Tracer
+) : OncePerRequestFilter() {
     override fun doFilterInternal(
         request: HttpServletRequest,
         response: HttpServletResponse,

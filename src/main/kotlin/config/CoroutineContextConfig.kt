@@ -12,25 +12,24 @@ import org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHan
 import java.lang.reflect.Method
 
 @Configuration
-class CoroutineContextConfig(private val observationRegistry: ObservationRegistry) : WebMvcRegistrations {
-    override fun getRequestMappingHandlerAdapter(): RequestMappingHandlerAdapter {
-        return object : RequestMappingHandlerAdapter() {
-            override fun createInvocableHandlerMethod(handlerMethod: HandlerMethod): ServletInvocableHandlerMethod {
-                return object : ServletInvocableHandlerMethod(handlerMethod) {
+class CoroutineContextConfig(
+    private val observationRegistry: ObservationRegistry
+) : WebMvcRegistrations {
+    override fun getRequestMappingHandlerAdapter(): RequestMappingHandlerAdapter =
+        object : RequestMappingHandlerAdapter() {
+            override fun createInvocableHandlerMethod(handlerMethod: HandlerMethod): ServletInvocableHandlerMethod =
+                object : ServletInvocableHandlerMethod(handlerMethod) {
                     override fun invokeSuspendingFunction(
                         method: Method,
                         target: Any,
                         args: Array<out Any>
-                    ): Any {
-                        return CoroutinesUtils.invokeSuspendingFunction(
+                    ): Any =
+                        CoroutinesUtils.invokeSuspendingFunction(
                             Dispatchers.Unconfined + observationRegistry.asContextElement(),
                             method,
                             target,
                             *args
                         )
-                    }
                 }
-            }
         }
-    }
 }
