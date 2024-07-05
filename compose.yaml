@@ -1,11 +1,11 @@
 services:
   mongodb:
-    image: mongo:7.0.11
+    image: mongo:7.0.12
     ports:
       - '27017:27017'
 
   loki:
-    image: grafana/loki:3.0.0
+    image: grafana/loki:3.1.0
     command: -config.file=/etc/loki/local-config.yaml
     ports:
       - "3100:3100"
@@ -23,7 +23,7 @@ services:
       - loki
 
   otel-collector:
-    image: otel/opentelemetry-collector:0.103.0
+    image: otel/opentelemetry-collector:0.104.0
     command: [ "--config=/etc/otel-collector.yaml" ]
     volumes:
       - ./docker-volume-files/otel-collector.yaml:/etc/otel-collector.yaml
@@ -43,7 +43,7 @@ services:
       - loki
 
   grafana:
-    image: grafana/grafana:11.0.0
+    image: grafana/grafana:11.1.0
     ports:
       - "3000:3000"
     volumes:
