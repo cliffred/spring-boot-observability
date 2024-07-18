@@ -3,6 +3,8 @@ package red.cliff.observability.trace
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.micrometer.tracing.TraceContext
 import io.micrometer.tracing.Tracer
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -58,5 +60,15 @@ class TraceController(
             in 9..10 -> logger.error { "Random error" }
         }
         return "Random value: $random"
+    }
+
+    @GetMapping("/suspend")
+    suspend fun suspend(): String {
+        logger.info { "Call to /suspend" }
+        withContext(Dispatchers.IO) {
+            logger.info { "From inside scope with IO Dispatcher" }
+        }
+        logger.info { "End /suspend" }
+        return "OK"
     }
 }
