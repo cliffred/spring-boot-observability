@@ -15,14 +15,14 @@
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>
-                %d{HH:mm:ss.SSS} %-5level [%t/%X{traceId:-}/%X{spanId:-}] %logger{36} - %msg%n
+                %d{HH:mm:ss.SSS} %-5level [%t %X{trace_id:-NO-TRACE}-%X{span_id:-NO-SPAN}] %logger{36} - %msg%n
             </pattern>
         </encoder>
     </appender>
 
     <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
         <http>
-            <url>http://localhost:3100/loki/api/v1/push</url>
+            <url>${LOKI_HOST:-http://localhost:3100}/loki/api/v1/push</url>
         </http>
         <format>
             <label>
@@ -35,8 +35,8 @@
                     "logger":"%logger",
                     "thread":"%thread",
                     "message": "%message",
-                    "traceId": "%X{traceId}",
-                    "spanId": "%X{spanId}",
+                    "traceId": "%X{trace_id}",
+                    "spanId": "%X{span_id}",
                     "mdc": "%mdc",
                     "exception": "%exception"
                     }

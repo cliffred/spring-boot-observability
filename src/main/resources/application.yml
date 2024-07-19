@@ -1,5 +1,5 @@
 spring:
-  application.name: Hello App
+  application.name: ${SERVICE_NAME:spring-boot-observability}
   docker:
     compose:
       lifecycle-management: start_only
@@ -13,17 +13,6 @@ spring:
       database: demo
 
 management:
-  otlp:
-    tracing:
-      endpoint: http://localhost:4318/v1/traces
-  tracing:
-    baggage:
-      correlation:
-        fields:
-          - custom_tx_id
-      enabled: true
-    sampling:
-      probability: 1.0
   metrics:
     tags:
       application: ${spring.application.name}
@@ -44,11 +33,6 @@ management:
   opentelemetry:
     resource-attributes:
       app: ${spring.application.name}
-
-micrometer:
-  observations:
-    annotations:
-      enabled: true
 
 info:
   application:

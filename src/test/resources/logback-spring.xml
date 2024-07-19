@@ -5,7 +5,7 @@
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>
-                %d{HH:mm:ss.SSS} %-5level [%t/%X{traceId:-}/%X{spanId:-}] %logger{36} - %msg%n
+                %d{HH:mm:ss.SSS} %-5level [%t %X{trace_id:-NO-TRACE}-%X{span_id:-NO-SPAN}] %logger{36} - %msg%n
             </pattern>
         </encoder>
     </appender>

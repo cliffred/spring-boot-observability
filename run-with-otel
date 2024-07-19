@@ -1,0 +1,57 @@
+#!/bin/bash
+
+# Set variables
+JAVA_AGENT=".otel/opentelemetry-javaagent.jar"
+JAR_DIRECTORY="build/libs"
+export SERVICE_NAME="spring-boot-observability"
+OTEL_AGENT_URL="https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/latest/download/opentelemetry-javaagent.jar"
+
+# Check if the JAR directory exists
+if [ ! -d "$JAR_DIRECTORY" ]; then
+  echo "Directory $JAR_DIRECTORY does not exist."
+  exit 1
+fi
+
+# Create directory for the agent if it doesn't exist
+mkdir -p .otel
+
+# Download the OpenTelemetry Java agent if it doesn't exist
+if [ ! -f "$JAVA_AGENT" ]; then
+  echo "Downloading OpenTelemetry Java agent..."
+  curl -sS -L -o $JAVA_AGENT $OTEL_AGENT_URL
+  if [ $? -ne 0 ]; then
+    echo "Failed to download OpenTelemetry Java agent."
+    exit 1
+  fi
+fi
+
+# Find the JAR files without -plain in the name
+JAR_FILES=$(find $JAR_DIRECTORY -type f -name "*-*.jar" ! -name "*plain*")
+
+# Count the number of JAR files found
+JAR_FILE_COUNT=$(echo "$JAR_FILES" | wc -l)
+
+if [ "$JAR_FILE_COUNT" -eq 0 ]; then
+  echo "No suitable JAR file found in $JAR_DIRECTORY."
+  exit 1
+elif [ "$JAR_FILE_COUNT" -gt 1 ]; then
+  echo "Multiple JAR files found:"
+  echo "$JAR_FILES"
+  echo "Please ensure there is only one JAR file in the directory."
+  exit 1
+else
+  JAR_FILE=$(echo "$JAR_FILES" | head -n 1)
+fi
+
+# Otel config
+export OTEL_SERVICE_NAME=$SERVICE_NAME
+export OTEL_JAVAAGENT_ENABLED=true
+export OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317
+export OTEL_EXPORTER_OTLP_PROTOCOL=grpc
+export OTEL_TRACES_EXPORTER=otlp
+export OTEL_METRICS_EXPORTER=none
+export OTEL_LOGS_EXPORTER=none
+
+# Run the Java application with the OpenTelemetry Java agent
+echo "Running $JAR_FILE"
+java -javaagent:$JAVA_AGENT -jar $JAR_FILE

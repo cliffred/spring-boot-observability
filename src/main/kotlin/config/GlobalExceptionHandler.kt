@@ -1,7 +1,7 @@
 package red.cliff.observability.config
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import io.micrometer.tracing.Tracer
+import io.opentelemetry.api.trace.Span
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.boot.autoconfigure.web.ErrorProperties.IncludeAttribute.ALWAYS
 import org.springframework.boot.autoconfigure.web.ServerProperties
@@ -18,7 +18,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @ControllerAdvice
 class GlobalExceptionHandler(
-    private val tracer: Tracer,
     private val objectMapper: ObjectMapper,
     serverProperties: ServerProperties,
 ) : ResponseEntityExceptionHandler() {
@@ -93,9 +92,8 @@ class GlobalExceptionHandler(
             problemDetail.setProperty("trace", ex.stackTraceToString())
         }
 
-        tracer.currentSpan()?.context()?.traceId()?.let {
-            problemDetail.setProperty("trace-id", it)
-        }
+        val span = Span.current()
+        problemDetail.setProperty("trace-id", span.spanContext.traceId)
 
         return problemDetail
     }

@@ -1,35 +1,36 @@
 package red.cliff.observability.config
 
-import io.micrometer.tracing.Tracer
+import io.opentelemetry.api.baggage.Baggage
+import io.opentelemetry.api.trace.Span
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.security.core.context.SecurityContextHolder
-import org.springframework.security.core.userdetails.User
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
+import red.cliff.observability.auth.User
 import kotlin.random.Random
 
-private const val CUSTOM_TX_ID = "custom_tx_id"
+private const val RANDOM_BAGGAGE = "baggage.random"
 private const val TRACE_ID_HEADER = "Trace-Id"
 
 @Component
-class TracerInjectionFilter(
-    private val tracer: Tracer
-) : OncePerRequestFilter() {
+class TracerInjectionFilter : OncePerRequestFilter() {
     override fun doFilterInternal(
         request: HttpServletRequest,
         response: HttpServletResponse,
         filterChain: FilterChain,
     ) {
-        tracer.createBaggageInScope(CUSTOM_TX_ID, Random.nextInt(100, 1000).toString())
+        Baggage
+            .builder()
+            .put(RANDOM_BAGGAGE, Random.nextInt(100, 1000).toString())
+            .build()
+            .makeCurrent()
 
-        val currentUser = (SecurityContextHolder.getContext().authentication.principal as? User)?.username ?: "-"
-        tracer.currentSpan()?.tag("username", currentUser)
-
-        tracer.currentSpan()?.context()?.traceId()?.let { traceId ->
-            response.addHeader(TRACE_ID_HEADER, traceId)
-        }
+        val span = Span.current()
+        val currentUser = (SecurityContextHolder.getContext().authentication.principal as? User)?.username ?: "unauthenticated"
+        span.setAttribute("username", currentUser)
+        response.addHeader(TRACE_ID_HEADER, span.spanContext.traceId)
 
         return filterChain.doFilter(request, response)
     }
