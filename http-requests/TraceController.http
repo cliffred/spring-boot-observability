@@ -9,3 +9,6 @@ GET {{uri}}/trace/random
 
 ### error
 GET {{uri}}/trace/error
+
+### suspend
+GET {{uri}}/trace/suspend

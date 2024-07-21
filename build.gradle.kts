@@ -51,6 +51,7 @@ dependencies {
     implementation(libs.faker)
     implementation(libs.bundles.logging)
     implementation(libs.bundles.tracing)
+
     implementation(libs.springdoc)
 
     annotationProcessor(libs.spring.boot.configuration.processor)
@@ -101,6 +102,8 @@ tasks.bootBuildImage {
     if (System.getenv("GITHUB_ACTIONS") == "true") {
         imageName = "ghcr.io/${System.getenv("GITHUB_REPOSITORY")}:${project.version}"
         tags = listOf("ghcr.io/${System.getenv("GITHUB_REPOSITORY")}:latest")
+    } else {
+        imageName = "${project.name}:latest"
     }
     docker {
         publishRegistry {
@@ -108,6 +111,15 @@ tasks.bootBuildImage {
             password = providers.environmentVariable("CR_PASSWORD")
         }
     }
+    environment =
+        mapOf(
+            "BP_OPENTELEMETRY_ENABLED" to "true",
+        )
+    buildpacks =
+        listOf(
+            "gcr.io/paketo-buildpacks/java",
+            "gcr.io/paketo-buildpacks/opentelemetry"
+        )
 }
 
 springBoot {

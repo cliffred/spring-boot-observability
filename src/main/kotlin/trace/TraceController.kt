@@ -1,8 +1,10 @@
 package red.cliff.observability.trace
 
 import io.github.oshai.kotlinlogging.KotlinLogging
-import io.micrometer.tracing.TraceContext
-import io.micrometer.tracing.Tracer
+import io.opentelemetry.api.baggage.Baggage
+import io.opentelemetry.api.trace.Span
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -13,7 +15,6 @@ import red.cliff.observability.client.HttpBinClient
 @RestController
 @RequestMapping("/trace")
 class TraceController(
-    private val tracer: Tracer,
     private val httpBinClient: HttpBinClient,
     private val traceService: TraceService,
 ) {
@@ -24,17 +25,16 @@ class TraceController(
         val response = httpBinClient.get()
         val responseHeaders = response["headers"]
         val traceparentHeader = responseHeaders["Traceparent"]?.asText() ?: "-"
-
-        val traceContext = tracer.currentSpan()?.context() ?: TraceContext.NOOP
+        val spanContext = Span.current().spanContext
 
         logger.info { "The following headers were in the request: $responseHeaders" }
-        logger.info { "Returning result with traceId ${traceContext.traceId()}" }
+        logger.info { "Returning result with traceId ${spanContext.traceId}" }
 
         return mapOf(
             "traceparentHeader" to traceparentHeader,
-            "traceId" to traceContext.traceId(),
-            "spanId" to traceContext.spanId(),
-            "traceBaggage" to tracer.allBaggage,
+            "traceId" to spanContext.traceId,
+            "spanId" to spanContext.spanId,
+            "traceBaggage" to Baggage.current().asMap().mapValues { it.value.value },
         )
     }
 
@@ -51,12 +51,22 @@ class TraceController(
     fun random(): String {
         logger.info { "Call to /random" }
         val random = traceService.generateRandomNumber(1, 10)
-        tracer.currentSpan()?.tag("random.value", random)
+        Span.current().setAttribute("random.value", random)
         when (random) {
             in 1..5 -> logger.info { "Random info" }
             in 6..8 -> logger.warn { "Random warning" }
             in 9..10 -> logger.error { "Random error" }
         }
         return "Random value: $random"
+    }
+
+    @GetMapping("/suspend")
+    suspend fun suspend(): String {
+        logger.info { "Call to /suspend" }
+        withContext(Dispatchers.IO) {
+            logger.info { "From inside scope with IO Dispatcher" }
+        }
+        logger.info { "End /suspend" }
+        return "OK"
     }
 }

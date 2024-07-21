@@ -55,7 +55,8 @@ datasources:
         customQuery: true
         query: '{$${__tags}} |= "$${__trace.traceId}" | json | line_format "{{.app}}\t{{.level}}\tspan_id={{.spanId}}\t{{.message}}"'
         tags:
-          - key: app
+          - key: service.name
+            value: app
     readOnly: false
     editable: true
   - uid: loki

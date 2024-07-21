@@ -10,6 +10,7 @@ kotlin-wiremock = "2.1.1"
 kotlinter = "4.4.1"
 logback = "0.1.5"
 loki-appender = "1.5.2"
+opentelemetry = "2.6.0"
 sonar = "5.1.0.4882"
 spring-boot = "3.3.2"
 spring-cloud = "2023.0.3"
@@ -33,8 +34,9 @@ logback-jackson = { module = "ch.qos.logback.contrib:logback-jackson", version.r
 logback-json-classic = { module = "ch.qos.logback.contrib:logback-json-classic", version.ref = "logback" }
 loki-logback-appender = { module = "com.github.loki4j:loki-logback-appender", version.ref = "loki-appender" }
 micrometer-registry-prometheus = { module = "io.micrometer:micrometer-registry-prometheus" }
-micrometer-tracing-bridge-otel = { module = "io.micrometer:micrometer-tracing-bridge-otel" }
-opentelemetry-exporter-otlp = { module = "io.opentelemetry:opentelemetry-exporter-otlp" }
+opentelemetry-instrumentation-api = { module = "io.opentelemetry.instrumentation:opentelemetry-instrumentation-api", version.ref = "opentelemetry" }
+opentelemetry-instrumentation-annotations = { module = "io.opentelemetry.instrumentation:opentelemetry-instrumentation-annotations", version.ref = "opentelemetry" }
+prometheus-metrics-tracer-common = { module = "io.prometheus:prometheus-metrics-tracer-common" }
 spring-boot-configuration-processor = { module = "org.springframework.boot:spring-boot-configuration-processor" }
 spring-boot-devtools = { module = "org.springframework.boot:spring-boot-devtools" }
 spring-boot-docker-compose = { module = "org.springframework.boot:spring-boot-docker-compose" }
@@ -57,7 +59,7 @@ springdoc = { module = "org.springdoc:springdoc-openapi-starter-webmvc-ui", vers
 kotest = ["kotest-runner-junit5", "kotest-assertions-core", "kotest-extensions-spring"]
 kotlin = ["kotlin-reflect", "kotlinx-coroutines-core", "kotlinx-coroutines-reactor"]
 logging = ["logback-jackson", "logback-json-classic", "loki-logback-appender"]
-tracing = ["micrometer-tracing-bridge-otel", "opentelemetry-exporter-otlp"]
+tracing = ["opentelemetry-instrumentation-api", "opentelemetry-instrumentation-annotations", "prometheus-metrics-tracer-common"]
 
 [plugins]
 git-properties = { id = "com.gorylenko.gradle-git-properties", version.ref = "git-properties" }
