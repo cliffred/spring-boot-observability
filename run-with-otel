@@ -54,4 +54,4 @@ export OTEL_LOGS_EXPORTER=none
 
 # Run the Java application with the OpenTelemetry Java agent
 echo "Running $JAR_FILE"
-java -javaagent:$JAVA_AGENT -jar $JAR_FILE
+java -javaagent:$JAVA_AGENT -jar $JAR_FILE "$@"
