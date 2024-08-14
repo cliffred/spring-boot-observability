@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.client.HttpServerErrorException
 import red.cliff.observability.client.HttpBinClient
 
-@RestController
-@RequestMapping("/trace")
+//@RestController
+//@RequestMapping("/trace")
 class TraceController(
     private val httpBinClient: HttpBinClient,
     private val traceService: TraceService,
