@@ -12,6 +12,8 @@ plugins {
     id("release-plugin")
 }
 
+apply { from("${projectDir}/versions.gradle.kts") }
+
 group = "red.cliff"
 
 java {
@@ -38,6 +40,12 @@ repositories {
 }
 
 dependencies {
+
+    val commonsIoVersion: String by rootProject.extra
+    val guavaVersion: String by rootProject.extra
+    implementation("commons-io:commons-io:$commonsIoVersion")
+    implementation("com.google.guava:guava:$guavaVersion")
+
     implementation(platform(libs.spring.cloud.bom))
     implementation(libs.spring.boot.starter.web)
     implementation(libs.spring.boot.starter.data.mongodb)

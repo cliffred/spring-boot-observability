@@ -12,6 +12,7 @@ spring:
     mongodb:
       database: demo
 
+
 management:
   metrics:
     tags:
@@ -42,7 +43,11 @@ logging:
   level:
     root: info
 
+spring.jackson.default-property-inclusion: non_null
+
 springdoc:
+  api-docs:
+    version: openapi_3_1
   swagger-ui:
     use-root-path: true
 
