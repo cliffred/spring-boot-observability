@@ -1,6 +1,6 @@
 services:
   mongodb:
-    image: mongo:7.0.12
+    image: mongo:7.0.14
     ports:
       - '27017:27017'
 
@@ -11,7 +11,7 @@ services:
       - "3100:3100"
 
   prometheus:
-    image: prom/prometheus:v2.54.0
+    image: prom/prometheus:v2.54.1
     ports:
       - "9090:9090"
     volumes:
@@ -43,7 +43,7 @@ services:
       - loki
 
   grafana:
-    image: grafana/grafana:11.1.4
+    image: grafana/grafana:11.2.0
     ports:
       - "3000:3000"
     volumes:
