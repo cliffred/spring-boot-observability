@@ -19,8 +19,8 @@ private val HEART_BEAT_TIME = 5.seconds
 private val HEART_BEAT_SSE = ServerSentEvent.builder<CustomerEvent>().event("heartbeat").build()
 
 @OptIn(ExperimentalCoroutinesApi::class)
-@RestController
-@RequestMapping("/api")
+//@RestController
+//@RequestMapping("/api")
 class CustomerController(
     private val customerService: CustomerService,
     private val eventNotifier: EventNotifier,
