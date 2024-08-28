@@ -23,7 +23,7 @@ services:
       - loki
 
   otel-collector:
-    image: otel/opentelemetry-collector:0.107.0
+    image: otel/opentelemetry-collector:0.108.0
     command: [ "--config=/etc/otel-collector.yaml" ]
     volumes:
       - ./docker-volume-files/otel-collector.yaml:/etc/otel-collector.yaml
