@@ -34,7 +34,7 @@ services:
       - tempo
 
   tempo:
-    image: grafana/tempo:2.5.0
+    image: grafana/tempo:2.6.0
     command: [ "--target=all", "--storage.trace.backend=local", "--storage.trace.local.path=/var/tempo", "--auth.enabled=false" ]
     ports:
       - "14250:14250"
