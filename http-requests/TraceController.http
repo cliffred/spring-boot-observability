@@ -10,5 +10,14 @@ GET {{uri}}/trace/random
 ### error
 GET {{uri}}/trace/error
 
+### error a
+GET {{uri}}/trace/error-a
+
+### error b
+GET {{uri}}/trace/error-b
+
+### error c
+GET {{uri}}/trace/error-c
+
 ### suspend
 GET {{uri}}/trace/suspend

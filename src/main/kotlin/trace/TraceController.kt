@@ -6,6 +6,7 @@ import io.opentelemetry.api.trace.Span
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.springframework.http.HttpStatus
+import org.springframework.web.HttpMediaTypeNotSupportedException
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -39,7 +40,16 @@ class TraceController(
     }
 
     @GetMapping("/error")
-    fun error(): Map<*, *> = throw HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "Something went wrong")
+    fun error(): Map<*, *> = throw HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "Something went wrong with the request")
+
+    @GetMapping("/error-a")
+    fun errorA(): Map<*, *> = throw HttpMediaTypeNotSupportedException("Something went wrong with media type")
+
+    @GetMapping("/error-b")
+    fun errorB(): Map<*, *> = throw IllegalArgumentException("Something went wrong with your argument")
+
+    @GetMapping("/error-c")
+    fun errorC(): Map<*, *> = throw TraceException("Something went wrong with tracing")
 
     @GetMapping("/info")
     fun health(): String {
@@ -70,3 +80,5 @@ class TraceController(
         return "OK"
     }
 }
+
+class TraceException(message: String) : RuntimeException(message)
