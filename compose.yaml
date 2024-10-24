@@ -11,7 +11,7 @@ services:
       - "3100:3100"
 
   prometheus:
-    image: prom/prometheus:v2.54.1
+    image: prom/prometheus:v2.55.0
     ports:
       - "9090:9090"
     volumes:
@@ -23,7 +23,7 @@ services:
       - loki
 
   otel-collector:
-    image: otel/opentelemetry-collector:0.111.0
+    image: otel/opentelemetry-collector:0.112.0
     command: [ "--config=/etc/otel-collector.yaml" ]
     volumes:
       - ./docker-volume-files/otel-collector.yaml:/etc/otel-collector.yaml
@@ -43,7 +43,7 @@ services:
       - loki
 
   grafana:
-    image: grafana/grafana:11.2.2
+    image: grafana/grafana:11.3.0
     ports:
       - "3000:3000"
     volumes:
