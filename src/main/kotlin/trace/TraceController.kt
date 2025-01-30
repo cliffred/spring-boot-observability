@@ -81,4 +81,6 @@ class TraceController(
     }
 }
 
-class TraceException(message: String) : RuntimeException(message)
+class TraceException(
+    message: String
+) : RuntimeException(message)
