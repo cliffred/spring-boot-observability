@@ -53,7 +53,7 @@ class TraceControllerTest(
                     .jsonPath("$.trace-id")
                     .exists()
                     .jsonPath("$.message")
-                    .isEqualTo("500 Something went wrong")
+                    .isEqualTo("500 Something went wrong with the request")
             }
         },
     )
