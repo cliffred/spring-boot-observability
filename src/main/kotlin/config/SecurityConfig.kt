@@ -48,7 +48,7 @@ class SecurityConfig(
                     PrometheusScrapeEndpoint::class.java,
                 ),
             )
-            authorizeRequests {
+            authorizeHttpRequests {
                 authorize(anyRequest, permitAll)
             }
             sharedConfig()
@@ -63,7 +63,7 @@ class SecurityConfig(
             securityMatcher(
                 EndpointRequest.toAnyEndpoint(),
             )
-            authorizeRequests {
+            authorizeHttpRequests {
                 authorize(anyRequest, hasRole("ADMIN"))
             }
             sharedConfig()
@@ -75,7 +75,7 @@ class SecurityConfig(
     @Order(3)
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http {
-            authorizeRequests {
+            authorizeHttpRequests {
                 authorize("/api/**", authenticated)
                 authorize(anyRequest, permitAll)
             }
