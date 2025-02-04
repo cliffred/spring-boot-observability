@@ -35,7 +35,14 @@ services:
 
   tempo:
     image: grafana/tempo:2.7.0
-    command: [ "--target=all", "--storage.trace.backend=local", "--storage.trace.local.path=/var/tempo", "--auth.enabled=false" ]
+    command:
+      - "--target=all"
+      - "--storage.trace.backend=local"
+      - "--storage.trace.local.path=/var/tempo"
+      - "--auth.enabled=false"
+      - "-config.file=/etc/tempo.yaml"
+    volumes:
+      - ./docker-volume-files/tempo-config.yaml:/etc/tempo.yaml
     ports:
       - "14250:14250"
       - "4317"
