@@ -25,7 +25,7 @@ services:
       - loki
 
   otel-collector:
-    image: otel/opentelemetry-collector:0.118.0
+    image: otel/opentelemetry-collector:0.119.0
     command:
       - "--config=/etc/otel-collector.yaml"
     volumes:
