@@ -12,7 +12,7 @@ Largely based on https://github.com/blueswen/spring-boot-observability
 ## Quick start
 
 - To run with the OpenTelemetry Instrumentation agent run  
-  `./gradlew bootJar && ./run-with-otel`
+  `docker compose -f ./compose.yaml up -d && ./gradlew bootJar && ./run-with-otel`
 - Find the swagger-ui at http://localhost:8080
 - Generate some observability data by running the k6 load test  
   `k6 run k6/script.js` or check out the [http-requests](http-requests)
