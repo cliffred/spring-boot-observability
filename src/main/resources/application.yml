@@ -14,6 +14,9 @@ spring:
 
 
 management:
+  observations:
+    annotations:
+      enabled: true
   metrics:
     tags:
       application: ${spring.application.name}
@@ -34,6 +37,9 @@ management:
   opentelemetry:
     resource-attributes:
       app: ${spring.application.name}
+  tracing:
+    sampling:
+      probability: 1
 
 info:
   application:
