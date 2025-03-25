@@ -1,6 +1,6 @@
 services:
   mongodb:
-    image: mongo:7.0.17
+    image: mongo:7.0.18
     ports:
       - '27017:27017'
 
@@ -25,7 +25,7 @@ services:
       - loki
 
   otel-collector:
-    image: otel/opentelemetry-collector:0.121.0
+    image: otel/opentelemetry-collector:0.122.1
     command:
       - "--config=/etc/otel-collector.yaml"
     volumes:
@@ -37,7 +37,7 @@ services:
       - tempo
 
   tempo:
-    image: grafana/tempo:2.7.1
+    image: grafana/tempo:2.7.2
     command:
       - "--target=all"
       - "--storage.trace.backend=local"
@@ -53,7 +53,7 @@ services:
       - loki
 
   grafana:
-    image: grafana/grafana:11.5.2
+    image: grafana/grafana:11.6.0
     ports:
       - "3000:3000"
     volumes:
